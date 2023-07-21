@@ -1,56 +1,22 @@
 package controller
 
 import (
-	"desa-sragen/domain"
+	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
 
-func (cx *Controller) SuratDomisili(c *gin.Context) {
-	param := c.Query("id")
-	if param != "" {
-		c.HTML(200, "detail-pengajuan.html", gin.H{
-	})
+func (cx *Controller) PengajuanDomisili(c *gin.Context) {
+
+	c.HTML(200, "pengajuan-surat-domisili.html", gin.H{})
+}
+
+func (cx *Controller) ListDokumen(c *gin.Context) {
+	param := c.Query("nik")
+	if param == "" {
+		c.JSON(http.StatusBadRequest, "nik tidak boleh kosong")
 		return
 	}
 
-
-	data := []domain.Pengajuan{
-		{
-			Id: "asfas-asf-fasvzxv",
-			Name: "deigo",
-			Job: "Backend",
-			Age: 24,
-			CreatedAt: "2023-06-15",
-		},{
-			Id: "xvxcv-asf-fasvzxv",
-			Name: "jonathan",
-			Job: "Devloper",
-			Age: 24,
-			CreatedAt: "2023-06-15",
-		},
-		{
-			Id: "jgfj-afaetsf-qet",
-			Name: "Siahaan",
-			Job: "Backend Developer",
-			Age: 24,
-			CreatedAt: "2023-06-15",
-		},
-	}
-
-	c.HTML(200, "surat-domisili.html", gin.H{
-		"items": data,
-		"url": cx.Env(),
-	})
-}
-
-func (cx *Controller) DetailPengajuan(c *gin.Context)  {
-	param := c.Param("id")
-	if param == "" {
-
-	}
-
-	c.HTML(200, "detail-pengajuan", gin.H{
-		
-	})
+	c.HTML(200, "list-document.html", gin.H{})
 }
