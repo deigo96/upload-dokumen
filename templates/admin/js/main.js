@@ -5,6 +5,66 @@
 * Author: BootstrapMade.com
 * License: https://bootstrapmade.com/license/
 */
+
+
+function GetToken() {
+  let token = localStorage.getItem("token")
+  return token
+}
+
+function RemoveLocalStorage(){
+  localStorage.clear();
+}
+
+function RedirectLogin(url) {
+  RemoveLocalStorage()
+  window.location.href = url
+}
+
+function LogOut(url) {
+  RedirectLogin(url)
+}
+
+function GetUsername() {
+  return localStorage.getItem("username")
+}
+
+function GetRole() {
+  return localStorage.getItem("role")
+}
+
+function validateToken(url) {
+  fetch(url+'validate-token', {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${GetToken()}`,
+    },
+  }).then((response) => {
+    if (!response.ok) {
+      RedirectLogin(`${url}login`)
+      return
+    }
+    return response.json()
+  }).then((data) => {
+    if (data.code != 200) {
+      RedirectLogin(`${url}login`)
+      return
+    }
+    return true
+  })
+}
+
+function SetProfile() {
+  let username = document.getElementById("profile-username")
+  let role = document.getElementById("profile-role")
+  let profile = document.getElementById("main-profile")
+
+  username.textContent += GetUsername()
+  role.textContent += GetRole()
+  profile.textContent += GetUsername()
+}
+
 (function() {
   "use strict";
 

@@ -15,7 +15,9 @@
 
   <!-- Google Fonts -->
   <link href="https://fonts.gstatic.com" rel="preconnect">
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+    rel="stylesheet">
 
   <!-- Vendor CSS Files -->
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -31,12 +33,12 @@
 
   <style>
     .card-title {
-    padding: 20px 0 15px 0;
-    font-size: 18px;
-    font-weight: 500;
-    color: #012970;
-    font-family: "Poppins", sans-serif;
-}
+      padding: 20px 0 15px 0;
+      font-size: 18px;
+      font-weight: 500;
+      color: #012970;
+      font-family: "Poppins", sans-serif;
+    }
   </style>
 
   <!-- =======================================================
@@ -57,7 +59,7 @@
         <div class="container">
           <div class="row justify-content-center">
             <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
-             
+
               <div class="card mb-3">
 
                 <div class="card-body">
@@ -66,32 +68,32 @@
                     <h5 class="card-title text-center pb-0 fs-4">Login</h5>
                   </div>
 
-                  {{if .error_message}}
+                  <!-- {{if .error_message}}
                     <div class="pt-4 pb-2">
                       <h5 class="card-title text-center pb-0 fs-4">{{.error_message}}</h5>
                     </div>
-                  {{end}}
+                  {{end}} -->
                   <form class="row g-3 needs-validation" novalidate>
 
                     <div class="col-12">
                       <label for="yourUsername" class="form-label">Username</label>
                       <div class="input-group has-validation">
                         <input type="text" name="username" class="form-control" id="yourUsername" required>
-                        <div class="invalid-feedback">Please enter your username.</div>
+                        <div class="invalid-feedback" id="invalid-username">Please enter your username.</div>
                       </div>
                     </div>
 
                     <div class="col-12">
                       <label for="yourPassword" class="form-label">Password</label>
                       <input type="password" name="password" class="form-control" id="yourPassword" required>
-                      <div class="invalid-feedback">Please enter your password!</div>
+                      <div class="invalid-feedback" id="invalid-password">Please enter your password!</div>
                     </div>
 
                     <div class="col-12">
-                      <button class="btn btn-primary w-100" onclick="login()">Masuk</button>
+                      <button class="btn btn-primary w-100" type="button" onclick="login()">Masuk</button>
                     </div>
                     <div class="col-12">
-                      <p class="small mb-0">Belum punya akun? <a href="{{.url}}register">Daftar akun</a></p>
+                      <p class="small mb-0">Belum punya akun? <a href="register">Daftar akun</a></p>
                     </div>
                   </form>
 
@@ -106,7 +108,8 @@
     </div>
   </main><!-- End #main -->
 
-  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
 
   <!-- Vendor JS Files -->
   <script src="admin/vendor/apexcharts/apexcharts.min.js"></script>
@@ -120,6 +123,7 @@
 
   <!-- Template Main JS File -->
   <script src="admin/js/main.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </body>
 
@@ -127,15 +131,103 @@
 
 <script>
 
-function login() {
-  let username = document.getElementById("yourUsername").value
-  let password = document.getElementById("yourPassword").value
-  let url = '{{.url}}dashboard'
-  console.log(url);
+  function login() {
+    let username = document.getElementById("yourUsername").value
+    let password = document.getElementById("yourPassword").value
+    let url = '{{.url}}'
 
-  if (username != "" && password != "") {
-    location.href = url
+    const invalidFeedbackUsername = document.getElementById("invalid-username");
+    const invalidFeedbackPassword = document.getElementById("invalid-password");
+
+    if (password == "" && username == "") {
+      invalidFeedbackPassword.style.display = "block";
+      invalidFeedbackUsername.style.display = "block";
+    }
+
+    if (password == "") {
+      invalidFeedbackPassword.style.display = "block";
+    }
+
+    if (username == "") {
+      invalidFeedbackUsername.style.display = "block";
+    }
+
+    if (username != "" && password != "") {
+      const request = {
+        username: username,
+        password: password,
+      }
+
+      // Options for the fetch() function
+      const requestOptions = {
+        method: "POST",             // HTTP method
+        headers: {                  // Request headers (optional, depends on your API requirements)
+          "Content-Type": "application/json", // Specify that you are sending JSON data in the request body
+          // Add any other headers if required by your API
+        },
+        body: JSON.stringify(request),  // Convert the data to JSON format and include it in the request body
+      };
+
+      // Make the POST request using fetch()
+      fetch(url + 'login-handler', requestOptions)
+        .then((response) => {
+          return response.json(); // Parse the response body as JSON
+        })
+        .then((data) => {
+          if (data.code != 200) {
+            throw new Error(data.message)
+          } else {
+            const Toast = Swal.mixin({
+              toast: true,
+              position: 'top-end',
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+              }
+            })
+
+            Toast.fire({
+              icon: 'success',
+              title: 'Login berhasil'
+            }).then((result) => {
+              // Redirect the user to a new URL after the toast is shown
+              localStorage.setItem("username", data.data.username)
+              localStorage.setItem("email", data.data.email)
+              localStorage.setItem("role", data.data.role)
+              localStorage.setItem("token", data.data.token)
+
+              if (data.data.role == "super" || data.data.role == "admin") {
+                window.location.href = `${url}dashboard`;
+              } else {
+                window.location.href = `${url}`;
+              }
+            });
+          }
+
+        })
+        .catch((error) => {
+          // Handle any errors that occurred during the fetch() call or JSON parsing
+          const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 2000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.addEventListener('mouseenter', Swal.stopTimer)
+              toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+          })
+
+          Toast.fire({
+            icon: 'error',
+            title: error.message
+          })
+        });
+    }
   }
-}
 
 </script>

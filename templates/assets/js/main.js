@@ -5,6 +5,21 @@
 * Author: BootstrapMade.com
 * License: https://bootstrapmade.com/license/
 */
+
+function GetToken() {
+  let token = localStorage.getItem("token")
+  return token
+}
+
+function RemoveLocalStorage(){
+  localStorage.clear();
+}
+
+function RedirectLogin(url) {
+  RemoveLocalStorage()
+  window.location.href = url
+}
+
 (function() {
   "use strict";
 

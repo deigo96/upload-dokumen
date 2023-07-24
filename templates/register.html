@@ -15,7 +15,9 @@
 
   <!-- Google Fonts -->
   <link href="https://fonts.gstatic.com" rel="preconnect">
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+    rel="stylesheet">
 
   <!-- Vendor CSS Files -->
   <link href="admin/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -47,7 +49,7 @@
         <div class="container">
           <div class="row justify-content-center">
             <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
-             
+
               <div class="card mb-3">
 
                 <div class="card-body">
@@ -57,38 +59,34 @@
                   </div>
 
                   <form class="row g-3 needs-validation" novalidate>
-                    <div class="col-12">
-                      <label for="yourName" class="form-label">Nama</label>
-                      <input type="text" name="name" class="form-control" id="yourName" required>
-                      <div class="invalid-feedback">Please, enter your name!</div>
-                    </div>
-
-                    <div class="col-12">
-                      <label for="yourEmail" class="form-label">Email</label>
-                      <input type="email" name="email" class="form-control" id="yourEmail" required>
-                      <div class="invalid-feedback">Please enter a valid Email adddress!</div>
-                    </div>
 
                     <div class="col-12">
                       <label for="yourUsername" class="form-label">Username</label>
                       <div class="input-group has-validation">
-                        <input type="text" name="username" class="form-control" id="yourUsername" required>
-                        <div class="invalid-feedback">Please choose a username.</div>
+                        <input type="text" name="username" class="form-control" id="username" required>
+                        <div class="invalid-feedback" id="invalid-username">Username tidak boleh kosong</div>
                       </div>
                     </div>
 
                     <div class="col-12">
-                      <label for="yourPassword" class="form-label">Password</label>
-                      <input type="password" name="password" class="form-control" id="yourPassword" required>
-                      <div class="invalid-feedback">Please enter your password!</div>
+                      <label for="yourEmail" class="form-label">Email</label>
+                      <input type="email" name="email" class="form-control" id="email" required>
+                      <div class="invalid-feedback" id="invalid-email">Email tidak boleh kosong</div>
                     </div>
 
-                   
+
                     <div class="col-12">
-                      <button class="btn btn-primary w-100" type="submit">Daftar</button>
+                      <label for="yourPassword" class="form-label">Password</label>
+                      <input type="password" name="password" class="form-control" id="password" required>
+                      <div class="invalid-feedback" id="invalid-password">Password tidak boleh kosong</div>
+                    </div>
+
+
+                    <div class="col-12">
+                      <button class="btn btn-primary w-100" type="button" onclick="register()">Daftar</button>
                     </div>
                     <div class="col-12">
-                      <p class="small mb-0">Sudah punya akun? <a href="{{.url}}login">Log in</a></p>
+                      <p class="small mb-0">Sudah punya akun? <a href="login">Log in</a></p>
                     </div>
                   </form>
 
@@ -112,7 +110,8 @@
     </div>
   </main><!-- End #main -->
 
-  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
 
   <!-- Vendor JS Files -->
   <script src="admin/vendor/apexcharts/apexcharts.min.js"></script>
@@ -126,7 +125,117 @@
 
   <!-- Template Main JS File -->
   <script src="admin/js/main.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </body>
 
 </html>
+
+<script>
+  function register() {
+    let username = document.getElementById("username").value
+    let email = document.getElementById("email").value
+    let password = document.getElementById("password").value
+    let url = '{{.url}}'
+
+    const invalidFeedbackUsername = document.getElementById("invalid-username");
+    const invalidFeedbackPassword = document.getElementById("invalid-password");
+    const invalidFeedbackEmail = document.getElementById("invalid-email");
+
+    if (password == "" && username == "" && email == "") {
+      invalidFeedbackPassword.style.display = "block";
+      invalidFeedbackUsername.style.display = "block";
+      invalidFeedbackEmail.style.display = "block";
+    }
+
+    if (password == "") {
+      invalidFeedbackPassword.style.display = "block";
+    } else if (password != "") {
+      invalidFeedbackPassword.style.display = "none";
+    }
+
+    if (username == "") {
+      invalidFeedbackUsername.style.display = "block";
+    } else if (username != "") {
+      invalidFeedbackUsername.style.display = "none";
+    }
+
+    if (email == "") {
+      invalidFeedbackEmail.style.display = "block";
+    } else if (email != "") {
+      invalidFeedbackEmail.style.display = "none";
+    }
+
+    if (password != "" && username != "" && email != "") {
+      const request = {
+        username: username,
+        password: password,
+        email: email,
+        role: 3,
+      }
+
+      // Options for the fetch() function
+      const requestOptions = {
+        method: "POST",             // HTTP method
+        headers: {                  // Request headers (optional, depends on your API requirements)
+          "Content-Type": "application/json", // Specify that you are sending JSON data in the request body
+          // Add any other headers if required by your API
+        },
+        body: JSON.stringify(request),  // Convert the data to JSON format and include it in the request body
+      };
+
+      // Make the POST request using fetch()
+      fetch(url + 'register-handler', requestOptions)
+        .then((response) => {
+          return response.json(); // Parse the response body as JSON
+        })
+        .then((data) => {
+          if (data.code != 201) {
+            throw new Error(data.message)
+          } else {
+            let redirectUrl = `${url}login`
+            const Toast = Swal.mixin({
+              toast: true,
+              position: 'top-end',
+              showConfirmButton: false,
+              timer: 2000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+              }
+            })
+
+            Toast.fire({
+              icon: 'success',
+              title: 'Daftar akun berhasil'
+            }).then((result) => {
+              // Redirect the user to a new URL after the toast is shown
+              window.location.href = redirectUrl; // Replace with your desired URL
+            });
+          }
+
+        })
+        .catch((error) => {
+          // Handle any errors that occurred during the fetch() call or JSON parsing
+          const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 2000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.addEventListener('mouseenter', Swal.stopTimer)
+              toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+          })
+
+          Toast.fire({
+            icon: 'error',
+            title: error.message
+          })
+        });
+
+    }
+  }
+</script>

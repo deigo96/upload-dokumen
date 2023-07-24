@@ -73,7 +73,7 @@
             </ul>
           </li> -->
           <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
-          <li><a class="getstarted scrollto" href="{{.url}}login">Get Started</a></li>
+          <li><a class="getstarted scrollto" href="login">Login</a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
@@ -121,7 +121,7 @@
           <div class="col-xl-3 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
             <div class="icon-box">
               <div class="icon"><i class="bx bxl-dribbble"></i></div>
-              <h4><a href="pengajuan-surat-domisili">Surat Domisili</a></h4>
+              <h4><a href="pengajuan-surat-domisili.html">Surat Domisili</a></h4>
               <p>Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi</p>
             </div>
           </div>
@@ -789,27 +789,33 @@
       cancelButtonText: 'Batal',
       showLoaderOnConfirm: true,
       preConfirm: (nik) => {
-        return fetch(`${url}?nik=${nik}`)
-          .then(response => {
-            if (!response.ok) {
-              throw new Error(response.statusText)
-            }
-            location.href = `${url}?nik=${nik}`
-            return
-          })
-          .catch(error => {
-            Swal.showValidationMessage(
+        // return fetch(`${url}?nik=${nik}`)
+        //   .then(response => {
+        //     if (!response.ok) {
+        //       throw new Error(response.statusText)
+        //     }
+        //     location.href = `${url}?nik=${nik}`
+        //     return
+        //   })
+        //   .catch(error => {
+        //     Swal.showValidationMessage(
+        //       `Dokumen tidak ditemukan`
+        //     )
+        //   })
+        if (nik == "") {
+          Swal.showValidationMessage(
               `Dokumen tidak ditemukan`
             )
-          })
+        }
       },
       allowOutsideClick: () => !Swal.isLoading()
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire({
-          title: `${result.value.login}'s avatar`,
-          imageUrl: result.value.avatar_url
-        })
+        // Swal.fire({
+        //   title: `${result.value.login}'s avatar`,
+        //   imageUrl: result.value.avatar_url
+        // })
+        location.href = "list-document.html"
       }
     })
   }

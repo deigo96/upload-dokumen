@@ -1,15 +1,19 @@
 package controller
 
 import (
+	"desa-sragen/bootrstrap"
 	"desa-sragen/domain"
 
 	"github.com/gin-gonic/gin"
 )
 
-type Controller struct{}
+type Controller struct{
+	Config *bootrstrap.Env
+	Repo domain.Repo
+}
 
 func (cx *Controller) Env()  string {
-	return "http://localhost:8080/"
+	return cx.Config.ServerUrl
 }
 
 func (cx *Controller) Dashboard(c *gin.Context) {
@@ -20,32 +24,6 @@ func (cx *Controller) Dashboard(c *gin.Context) {
 	})
 }
 
-func (cx *Controller) Login(c *gin.Context) {
-
-	c.HTML(200, "login.html", gin.H{
-		"url":cx.Env(),
-	})
-}
-
-
-func (cx *Controller) Register(c *gin.Context) {
-
-
-	c.HTML(200, "register.html", gin.H{
-		"url":cx.Env(),
-	})
-}
-
-func (cx *Controller) LoginHandler(c *gin.Context)  {
-	var req domain.LoginParam
-	if c.ShouldBindJSON(&req) != nil {
-		
-		c.HTML(200, "login.html", gin.H{
-			"error_messages": "data tidak boleh kosong",
-		})
-	}
-
-	c.HTML(200, "admin_dashboard.html", gin.H{
-		"url":cx.Env(),
-	})
+func (cx *Controller) ValidateToken(c *gin.Context)  {
+	c.JSON(200, domain.JsonResponse(200, "Validated", domain.Empty{}))
 }
