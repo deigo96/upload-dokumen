@@ -47,6 +47,7 @@ func Setup(env *bootrstrap.Env, db bootrstrap.Databases, router *gin.RouterGroup
 
 	publicRoute.GET("/pengajuan-surat-domisili", cx.PengajuanDomisili)
 	publicRoute.GET("/list-dokumen", cx.ListDokumen)
+	protectedRoute.POST("/kirim-pengajuan", cx.KirimPengajuan)
 
 
 	// protected

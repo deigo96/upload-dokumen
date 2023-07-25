@@ -32,26 +32,29 @@ function GetRole() {
   return localStorage.getItem("role")
 }
 
-function validateToken(url) {
-  fetch(url+'validate-token', {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": `Bearer ${GetToken()}`,
-    },
-  }).then((response) => {
+async function validateToken(url) {
+  try {
+    const response = await fetch(url + 'validate-token', {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${GetToken()}`,
+      },
+    });
+
     if (!response.ok) {
       console.log(response);
-      return false
+      return false;
+    } else {
+      console.log(response.status);
+      return true;
     }
-    // return response.json()
-  // }).then((data) => {
-  //   if (data.code != 200) {
-  //     return false
-  //   }
-  //   return true
-  })
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
 }
+
 
 function SetProfile() {
   let username = document.getElementById("profile-username")

@@ -6,6 +6,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt"
+	"github.com/google/uuid"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -125,4 +126,8 @@ func StatusActive(b bool) string {
 
 func TimeToString(t time.Time) string {
 	return t.Format("2006-01-02 15:04:05")
+}
+
+func GenerateUuid() string {
+	return uuid.New().String()
 }

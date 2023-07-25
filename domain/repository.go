@@ -5,4 +5,5 @@ type Repo interface {
 	CreateUser(Auth) error
 	GetAllAdmin() ([]Auth, error)
 	InActiveAuth(id int, isActive bool) error
+	CreatePengajuan(PengajuanParam) error
 }

@@ -26,10 +26,8 @@
   <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
   <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
   <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
-
   <!-- =======================================================
   * Template Name: Arsha
   * Updated: Jul 05 2023 with Bootstrap v5.3.0
@@ -57,7 +55,19 @@
           <li><a class="nav-link scrollto" href="index.html#portfolio">Portfolio</a></li>
           <li><a class="nav-link scrollto" href="index.html#team">Team</a></li>
           <li><a class="nav-link scrollto" href="index.html#contact">Contact</a></li>
-          <li><a class="getstarted scrollto" href="login.html">Login</a></li>
+          <li class="dropdown" id="profileDrowpdown"><a href="#"><span>Drop Down</span> <i
+                class="bi bi-chevron-down"></i></a>
+            <ul>
+
+              <!-- <li><a href="#">Drop Down 3</a></li> -->
+              <li>
+                <a class="dropdown-item d-flex align-items-center" href="#" onclick="LogOut('{{.url}}login')">
+                  <span>Sign Out</span>
+                  <i class="bi bi-box-arrow-right"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
@@ -91,59 +101,72 @@
                 <label for="name">Nama Lengkap</label>
                 <input type="text" class="form-control" name="nama" id="nama" required>
               </div>
-            <div class="form-group mt-4">
-              <label for="name">NIK</label>
-              <input type="text" class="form-control" name="nik" id="nik" required>
-            </div>
-            <div class="form-group mt-4">
-              <label for="name">Pekerjaan</label>
-              <input type="text" class="form-control" name="pekerjaan" id="pekerjaan" required>
-            </div>
-            <div class="form-group mt-4">
-              <label for="name">Tanggal Lahir</label>
-              <input type="date" class="form-control" name="tgl_lahir" id="tgl_lahir" required>
-            </div>
-            <div class="form-group mt-4">
-              <label for="name">Agama</label>
-              <select name="agama" id="agama" class="form-control">
-                <option selected>Pilih Agama ---</option>
-                <option value="Islam">Islam</option>
-                <option value="Kristen Protestan">Kristen Protestan</option>
-                <option value="Katolik">Katolik</option>
-                <option value="Budha">Budha</option>
-                <option value="Hindu">Hindu</option>
-                <option value="Konghucu">Konghucu</option>
-                <option value="Lainnya">Lainnya</option>
-              </select>
-            </div>
-            <div class="form-group mt-4">
-              <label for="name">Nama Ibu</label>
-              <input type="text" class="form-control" name="nama_ibu" id="nama_ibu" required>
-            </div>
-            <div class="form-group mt-4">
-              <label for="name">Upload Foto</label>
-              <input type="file" class="form-control" name="fileFoto" id="fileFoto" required>
-              <i class="" style="color: red;">file jpg, jpeg max 1MB</i>
-            </div>
-            <div class="form-group mt-4">
-              <label for="name">Upload KTP</label>
-              <input type="file" class="form-control" name="fileKtp" id="fileKtp" required>
-              <i class="" style="color: red;">file jpg, jpeg max 1MB</i>
-            </div>
-            <div class="form-group mt-4">
-              <label for="name">Alamat</label>
-              <textarea class="form-control" name="alamat" id="alamat" rows="3" required></textarea>
-            </div>
-            <div class="form-group mt-4">
-              <label for="name">Alasan Pengajuan</label>
-              <textarea class="form-control" name="alasan_pengajuan" id="alasan_pengajuan" rows="3" required></textarea>
-            </div>
-            <div class="mt-4"><button style="background: #47b2e4;
+              <div class="form-group mt-4">
+                <label for="name">NIK</label>
+                <input type="text" class="form-control" name="nik" id="nik" required>
+              </div>
+              <div class="form-group mt-4">
+                <label for="name">Pekerjaan</label>
+                <input type="text" class="form-control" name="pekerjaan" id="pekerjaan" required>
+              </div>
+              <div class="form-group mt-4">
+                <label for="name">Nomor Telepon</label>
+                <input type="text" class="form-control" name="phone" id="phone" required>
+              </div>
+              <div class="form-group mt-4">
+                <label for="jenkel">Jenis Kelamin</label>
+                <select name="jenkel" id="mySelect" class="form-control chosen-select">
+                  <option value="" selected>Pilih jenis kelamin ...</option>
+                  <option value="1">Laki-laki</option>
+                  <option value="2">Perempuan</option>
+                </select>
+              </div>
+              <div class="form-group mt-4">
+                <label for="name">Agama</label>
+                <select name="agama" id="agama" class="form-control chosen-select">
+                  <option selected>Pilih Agama ---</option>
+                  <option value="Islam">Islam</option>
+                  <option value="Kristen Protestan">Kristen Protestan</option>
+                  <option value="Katolik">Katolik</option>
+                  <option value="Budha">Budha</option>
+                  <option value="Hindu">Hindu</option>
+                  <option value="Konghucu">Konghucu</option>
+                  <option value="Lainnya">Lainnya</option>
+                </select>
+              </div>
+              <div class="form-group mt-4">
+                <label for="name">Tempat Lahir</label>
+                <input type="text" class="form-control" name="tempat_lahir" id="tempat_lahir" required>
+              </div>
+              <div class="form-group mt-4">
+                <label for="name">Tanggal Lahir</label>
+                <input type="date" class="form-control" name="tgl_lahir" id="tgl_lahir" required>
+              </div>
+              <div class="form-group mt-4">
+                <label for="name">Upload Foto</label>
+                <input type="file" class="form-control" name="fileFoto" id="fileFoto" required>
+                <i class="" style="color: red;">file jpg, jpeg max 1MB</i>
+              </div>
+              <div class="form-group mt-4">
+                <label for="name">Upload KTP</label>
+                <input type="file" class="form-control" name="fileKtp" id="fileKtp" required>
+                <i class="" style="color: red;">file jpg, jpeg max 1MB</i>
+              </div>
+              <div class="form-group mt-4">
+                <label for="name">Alamat</label>
+                <textarea class="form-control" name="alamat" id="alamat" rows="3" required></textarea>
+              </div>
+              <div class="form-group mt-4">
+                <label for="name">Alasan Pengajuan</label>
+                <textarea class="form-control" name="alasan_pengajuan" id="alasan_pengajuan" rows="3"
+                  required></textarea>
+              </div>
+              <div class="mt-4"><button style="background: #47b2e4;
               border: #47b2e4;" class="btn btn-primary" onclick="kirimPengajuan()">Kirim Pengajuan</button></div>
+            </div>
           </div>
-        </div>
 
-      </div>
+        </div>
     </section><!-- End Portfolio Details Section -->
 
   </main><!-- End #main -->
@@ -240,12 +263,23 @@
 </html>
 
 <script>
+  const url = '{{.url}}'
+  validateToken(url).then((isValid) => {
+    if (isValid) {
+      document.getElementById("loginButton").style.display = "none"
+      document.getElementById("profileDrowpdown").style.display = "flex"
+    } else {
+      document.getElementById("loginButton").style.display = "flex"
+      document.getElementById("profileDrowpdown").style.display = "none"
+    }
+  })
+
   function kirimPengajuan() {
     let nama = document.getElementById("nama").value
     let nik = document.getElementById("nik").value
     let pekerjaan = document.getElementById("pekerjaan").value
     let agama = document.getElementById("agama").value
-    let nama_ibu = document.getElementById("nama_ibu").value
+    let tempat_lahir = document.getElementById("tempat_lahir").value
     let tgl_lahir = document.getElementById("tgl_lahir").value
     let alamat = document.getElementById("alamat").value
     let alasan_pengajuan = document.getElementById("alasan_pengajuan").value
@@ -260,7 +294,7 @@
       confirmButtonText: "Kirim pengajuan",
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire("Berhasil","Pengajuan dokumen berhasil dikirim", "success");
+        Swal.fire("Berhasil", "Pengajuan dokumen berhasil dikirim", "success");
       }
     });
 

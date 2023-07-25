@@ -3,6 +3,7 @@ package repository
 import (
 	"desa-sragen/domain"
 	"errors"
+	"log"
 
 	"gorm.io/gorm"
 )
@@ -45,6 +46,15 @@ func (r *repo) InActiveAuth(id int, isActive bool) error {
 	data := map[bool]int8{true:1, false:0}[isActive]
 
 	if err := r.db.Debug().Table("auth").Where("auth_id = ?", id).Update("is_active", data).Error; err != nil {
+		return errors.New("internal server error")
+	}
+
+	return nil
+}
+
+func (r *repo) CreatePengajuan(req domain.PengajuanParam) error {
+	if err := r.db.Table("pengajuan_dokumen").Create(&req).Error; err != nil {
+		log.Println(err)
 		return errors.New("internal server error")
 	}
 

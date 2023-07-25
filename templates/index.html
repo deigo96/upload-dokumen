@@ -57,25 +57,16 @@
           <li><a class="nav-link scrollto" href="#team">Team</a></li>
           <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
           <li><a class="getstarted scrollto" id="loginButton" href="login">Login</a></li>
-          <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
+          <li class="dropdown" id="profileDrowpdown"><a href="#"><span>Drop Down</span> <i
+                class="bi bi-chevron-down"></i></a>
             <ul>
-              <!-- <li><a href="#">Drop Down 1</a></li> -->
-              <!-- <li class="dropdown"><a href="#"><span>Deep Drop Down</span> <i class="bi bi-chevron-right"></i></a>
-                <ul>
-                  <li><a href="#">Deep Drop Down 1</a></li>
-                  <li><a href="#">Deep Drop Down 2</a></li>
-                  <li><a href="#">Deep Drop Down 3</a></li>
-                  <li><a href="#">Deep Drop Down 4</a></li>
-                  <li><a href="#">Deep Drop Down 5</a></li>
-                </ul>
-              </li> -->
-              <!-- <li><a href="#">Drop Down 2</a></li> -->
+             
               <!-- <li><a href="#">Drop Down 3</a></li> -->
               <li>
                 <a class="dropdown-item d-flex align-items-center" href="#" onclick="LogOut('{{.url}}login')">
                   <span>Sign Out</span>
                   <i class="bi bi-box-arrow-right"></i>
-                </a>  
+                </a>
               </li>
             </ul>
           </li>
@@ -126,7 +117,7 @@
           <div class="col-xl-3 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
             <div class="icon-box">
               <div class="icon"><i class="bx bxl-dribbble"></i></div>
-              <h4><a href="pengajuan-surat-domisili.html">Surat Domisili</a></h4>
+              <h4><a href="pengajuan-surat-domisili">Surat Domisili</a></h4>
               <p>Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi</p>
             </div>
           </div>
@@ -781,9 +772,16 @@
 
 
 <script>
-  if (!validateToken()) {
-    document.getElementById("loginButton").style.display = "none"
-  }
+  let url = '{{.url}}'
+  validateToken(url).then((isValid) => {
+    if (isValid) {
+      document.getElementById("loginButton").style.display = "none"
+      document.getElementById("profileDrowpdown").style.display = "flex"
+    } else {
+      document.getElementById("loginButton").style.display = "flex"
+      document.getElementById("profileDrowpdown").style.display = "none"
+    }
+  })
 
   function cariDokumen() {
     let url = '{{.url}}list-dokumen'
@@ -813,8 +811,8 @@
         //   })
         if (nik == "") {
           Swal.showValidationMessage(
-              `Dokumen tidak ditemukan`
-            )
+            `Dokumen tidak ditemukan`
+          )
         }
       },
       allowOutsideClick: () => !Swal.isLoading()
