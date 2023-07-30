@@ -46,6 +46,12 @@ func Setup(env *bootrstrap.Env, db bootrstrap.Databases, router *gin.RouterGroup
 	publicRoute.GET("/detail-pengajuan/:id", cx.DetailPengajuan)
 
 	publicRoute.GET("/pengajuan-surat-domisili", cx.PengajuanDomisili)
+	publicRoute.GET("/pengajuan-surat-kehilangan", cx.PengajuanKehilangan)
+	publicRoute.GET("/pengajuan-surat-kelahiran", cx.PengajuanKelahiran)
+	publicRoute.GET("/pengajuan-surat-kematian", cx.PengajuanKematian)
+	publicRoute.GET("/pengajuan-kartu-keluarga", cx.PengajuanKk)
+	publicRoute.GET("/pengajuan-kartu-tanda-penduduk", cx.PengajuanKtp)
+	publicRoute.GET("/pengajuan-surat-usaha", cx.PengajuanSku)
 	publicRoute.GET("/list-dokumen", cx.ListDokumen)
 	protectedRoute.POST("/kirim-pengajuan", cx.KirimPengajuan)
 

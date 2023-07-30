@@ -11,6 +11,14 @@ function GetToken() {
   return token
 }
 
+function GetUsername() {
+  return localStorage.getItem("username")
+}
+
+function GetRole() {
+  return localStorage.getItem("role")
+}
+
 function RemoveLocalStorage(){
   localStorage.clear();
 }
@@ -18,6 +26,10 @@ function RemoveLocalStorage(){
 function RedirectLogin(url) {
   RemoveLocalStorage()
   window.location.href = url
+}
+
+function ReloadPage() {
+  location.reload()
 }
 
 function LogOut(url) {

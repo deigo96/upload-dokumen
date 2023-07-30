@@ -26,8 +26,10 @@
   <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
   <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
   <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
+
   <!-- =======================================================
   * Template Name: Arsha
   * Updated: Jul 05 2023 with Bootstrap v5.3.0
@@ -43,7 +45,7 @@
   <header id="header" class="fixed-top header-inner-pages">
     <div class="container d-flex align-items-center">
 
-      <h1 class="logo me-auto"><a href="{{.url}}">DESA BENDO</a></h1>
+      <h1 class="logo me-auto"><a href="index.html">Desa Bendo</a></h1>
       <!-- Uncomment below if you prefer to use an image logo -->
       <!-- <a href="index.html" class="logo me-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
@@ -83,7 +85,7 @@
           <li><a href="{{.url}}">Home</a></li>
           <li>Pengajuan</li>
         </ol>
-        <h2>Pengajuan Surat Domisili</h2>
+        <h2>Pengajuan Surat Keterangan Usaha</h2>
 
       </div>
     </section><!-- End Breadcrumbs -->
@@ -100,51 +102,21 @@
                 <input type="text" class="form-control" name="nama" id="nama" required>
               </div>
               <div class="form-group mt-4">
-                <label for="name">Tempat Lahir</label>
-                <input type="text" class="form-control" name="tempat_lahir" id="tempat_lahir" required>
-              </div>
-              <div class="form-group mt-4">
-                <label for="name">Tanggal Lahir</label>
-                <input type="date" class="form-control" name="tgl_lahir" id="tgl_lahir" required>
-              </div>
-              <div class="form-group mt-4">
-                <label for="name">Status Perkawinan</label>
-                <input type="text" class="form-control" name="statusKawin" id="statusKawin" required>
-              </div>
-              <div class="form-group mt-4">
                 <label for="name">Pekerjaan</label>
                 <input type="text" class="form-control" name="pekerjaan" id="pekerjaan" required>
               </div>
               <div class="form-group mt-4">
-                <label for="name">Agama</label>
-                <select name="agama" id="agama" class="form-control chosen-select">
-                  <option selected>Pilih Agama ---</option>
-                  <option value="Islam">Islam</option>
-                  <option value="Kristen Protestan">Kristen Protestan</option>
-                  <option value="Katolik">Katolik</option>
-                  <option value="Budha">Budha</option>
-                  <option value="Hindu">Hindu</option>
-                  <option value="Konghucu">Konghucu</option>
-                  <option value="Lainnya">Lainnya</option>
-                </select>
-              </div>
-              <div class="form-group mt-4">
-                <label for="name">Keperluan</label>
-                <input type="text" class="form-control" name="keperluan" id="keperluan" required>
-              </div>
-              <div class="form-group mt-4">
-                <label for="name">Upload Foto</label>
-                <input type="file" class="form-control" name="fileFoto" id="fileFoto" required>
-                <i class="" style="color: red;">file jpg dan jpeg max 2 MB</i>
-              </div>
-              <div class="form-group mt-4">
                 <label for="name">Upload KTP</label>
                 <input type="file" class="form-control" name="fileKtp" id="fileKtp" required>
-                <i class="" style="color: red;">file jpg dan jpeg max 2 MB</i>
+                <i class="" style="color: red;">file jpg, jpeg max 1MB</i>
               </div>
               <div class="form-group mt-4">
                 <label for="name">Alamat</label>
                 <textarea class="form-control" name="alamat" id="alamat" rows="3" required></textarea>
+              </div>
+              <div class="form-group mt-4">
+                <label for="name">Jenis Usaha</label>
+                <textarea class="form-control" name="jenis_usaha" id="jenis_usaha" rows="3" required></textarea>
               </div>
               <div class="mt-4"><button style="background: #47b2e4;
               border: #47b2e4;" class="btn btn-primary" onclick="kirimPengajuan()">Kirim Pengajuan</button></div>
@@ -248,29 +220,19 @@
 
   function kirimPengajuan() {
     let nama = document.getElementById("nama").value
-    let status_perkawinan = document.getElementById("statusKawin").value
     let pekerjaan = document.getElementById("pekerjaan").value
-    let agama = document.getElementById("agama").value
-    let tempat_lahir = document.getElementById("tempat_lahir").value
-    let tanggal_lahir = document.getElementById("tgl_lahir").value
     let alamat = document.getElementById("alamat").value
-    let fileFoto = document.getElementById("fileFoto")
     let fileKtp = document.getElementById("fileKtp")
-    let keperluan = document.getElementById("keperluan").value
-    let jenis_pengajuan = 1
+    let jenis_usaha = document.getElementById("jenis_usaha").value
+    let jenis_pengajuan = 2
 
     const formData = new FormData();
     formData.append("nama", nama);
-    formData.append("status_perkawinan", status_perkawinan);
     formData.append("pekerjaan", pekerjaan);
-    formData.append("agama", agama);
-    formData.append("tempat_lahir", tempat_lahir);
-    formData.append("tanggal_lahir", tanggal_lahir);
+    formData.append("jenis_usaha", jenis_usaha);
     formData.append("alamat", alamat);
-    formData.append("keperluan", keperluan);
-    formData.append("jenis_pengajuan", jenis_pengajuan);
-    formData.append("foto", fileFoto.files[0]);
     formData.append("ktp", fileKtp.files[0]);
+    formData.append("jenis_pengajuan", jenis_pengajuan);
 
     Swal.fire({
       title: "Apakah anda yakin?",

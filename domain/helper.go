@@ -58,7 +58,7 @@ func  GenerateToken(UserID int, secret, Username, role string) string {
 		Username,
 		role,
 		jwt.StandardClaims{
-			ExpiresAt: time.Now().Add(1 * time.Hour).Unix(),
+			ExpiresAt: time.Now().Add(24 * time.Hour).Unix(),
 			// Issuer:    j.issuer,
 			IssuedAt: time.Now().Unix(),
 		},
