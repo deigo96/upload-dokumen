@@ -13,7 +13,7 @@ func Setup(env *bootrstrap.Env, db bootrstrap.Databases, router *gin.RouterGroup
 	repo := repository.NewRepository(db.Db)
 	cx := &controller.Controller{
 		Config: env,
-		Repo: repo,
+		Repo:   repo,
 	}
 
 	// adminRoute := router.Group("admin")
@@ -52,9 +52,8 @@ func Setup(env *bootrstrap.Env, db bootrstrap.Databases, router *gin.RouterGroup
 	publicRoute.GET("/pengajuan-kartu-keluarga", cx.PengajuanKk)
 	publicRoute.GET("/pengajuan-kartu-tanda-penduduk", cx.PengajuanKtp)
 	publicRoute.GET("/pengajuan-surat-usaha", cx.PengajuanSku)
-	publicRoute.GET("/list-dokumen", cx.ListDokumen)
+	protectedRoute.GET("/list-dokumen", cx.ListDokumen)
 	protectedRoute.POST("/kirim-pengajuan", cx.KirimPengajuan)
-
 
 	// protected
 	protectedRoute.GET("asd", cx.GetAuth)

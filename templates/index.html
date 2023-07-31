@@ -60,7 +60,7 @@
           <li class="dropdown" id="profileDrowpdown"><a href="#"><span>Drop Down</span> <i
                 class="bi bi-chevron-down"></i></a>
             <ul>
-             
+
               <!-- <li><a href="#">Drop Down 3</a></li> -->
               <li>
                 <a class="dropdown-item d-flex align-items-center" href="#" onclick="LogOut('{{.url}}login')">
@@ -771,57 +771,91 @@
 
 <script>
   let url = '{{.url}}'
+  let isLoggedIn
   validateToken(url).then((isValid) => {
     if (isValid) {
+      isLoggedIn = true
       document.getElementById("loginButton").style.display = "none"
       document.getElementById("profileDrowpdown").style.display = "flex"
     } else {
+      isLoggedIn = false
       document.getElementById("loginButton").style.display = "flex"
       document.getElementById("profileDrowpdown").style.display = "none"
     }
   })
 
   function cariDokumen() {
-    let url = '{{.url}}list-dokumen'
-    Swal.fire({
-      title: 'Masukan NIK untuk mencari dokumen',
-      input: 'text',
-      inputAttributes: {
-        autocapitalize: 'off'
-      },
-      showCancelButton: true,
-      confirmButtonText: 'Cari',
-      cancelButtonText: 'Batal',
-      showLoaderOnConfirm: true,
-      preConfirm: (nik) => {
-        // return fetch(`${url}?nik=${nik}`)
-        //   .then(response => {
-        //     if (!response.ok) {
-        //       throw new Error(response.statusText)
-        //     }
-        //     location.href = `${url}?nik=${nik}`
-        //     return
-        //   })
-        //   .catch(error => {
-        //     Swal.showValidationMessage(
-        //       `Dokumen tidak ditemukan`
-        //     )
-        //   })
-        if (nik == "") {
-          Swal.showValidationMessage(
-            `Dokumen tidak ditemukan`
-          )
-        }
-      },
-      allowOutsideClick: () => !Swal.isLoading()
-    }).then((result) => {
-      if (result.isConfirmed) {
-        // Swal.fire({
-        //   title: `${result.value.login}'s avatar`,
-        //   imageUrl: result.value.avatar_url
-        // })
-        location.href = "list-document.html"
-      }
-    })
+    let urls = '{{.url}}'
+
+    if (!isLoggedIn) {
+      RedirectLogin(urls + "login")
+      return
+    }
+
+    if (isLoggedIn) {
+      fetch(urls + "list-dokumen", {
+        headers: {
+          Authorization: "Bearer " + GetToken(),
+        },
+      })
+        .then((response) => {
+          console.log(response);
+          // Check the response status and handle itaccordingly
+          if (response.ok) {
+            // Success: redirect to the protected URL
+            // window.location.href = urls + "list-dokumen";
+            console.log(GetToken());
+          } else {
+            // Handle error response, e.g., unauthorized access
+            console.error("Error: Unauthorized or other error occurred.");
+          }
+        })
+        .catch((error) => {
+          // Handle fetch error
+          console.error("Fetch error:", error);
+        });
+    }
+
+    // let url = '{{.url}}list-dokumen'
+    // Swal.fire({
+    //   title: 'Masukan NIK untuk mencari dokumen',
+    //   input: 'text',
+    //   inputAttributes: {
+    //     autocapitalize: 'off'
+    //   },
+    //   showCancelButton: true,
+    //   confirmButtonText: 'Cari',
+    //   cancelButtonText: 'Batal',
+    //   showLoaderOnConfirm: true,
+    //   preConfirm: (nik) => {
+    //     // return fetch(`${url}?nik=${nik}`)
+    //     //   .then(response => {
+    //     //     if (!response.ok) {
+    //     //       throw new Error(response.statusText)
+    //     //     }
+    //     //     location.href = `${url}?nik=${nik}`
+    //     //     return
+    //     //   })
+    //     //   .catch(error => {
+    //     //     Swal.showValidationMessage(
+    //     //       `Dokumen tidak ditemukan`
+    //     //     )
+    //     //   })
+    //     if (nik == "") {
+    //       Swal.showValidationMessage(
+    //         `Dokumen tidak ditemukan`
+    //       )
+    //     }
+    //   },
+    //   allowOutsideClick: () => !Swal.isLoading()
+    // }).then((result) => {
+    //   if (result.isConfirmed) {
+    //     // Swal.fire({
+    //     //   title: `${result.value.login}'s avatar`,
+    //     //   imageUrl: result.value.avatar_url
+    //     // })
+    //     location.href = "list-document.html"
+    //   }
+    // })
   }
 </script>

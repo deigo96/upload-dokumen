@@ -12,7 +12,6 @@ import (
 
 const maxFileSize = 5 * 1024 * 1024 // 5 MB
 
-
 func (cx *Controller) PengajuanDomisili(c *gin.Context) {
 
 	c.HTML(200, "pengajuan-surat-domisili.html", gin.H{
@@ -63,17 +62,12 @@ func (cx *Controller) PengajuanSku(c *gin.Context) {
 }
 
 func (cx *Controller) ListDokumen(c *gin.Context) {
-	param := c.Query("nik")
-	if param == "" {
-		c.JSON(http.StatusBadRequest, "nik tidak boleh kosong")
-		return
-	}
+	fmt.Print(c.Request.Header.Get("Authorization"))
 
 	c.HTML(200, "list-document.html", gin.H{})
 }
 
-func (cx *Controller) KirimPengajuan(c *gin.Context)  {
-	
+func (cx *Controller) KirimPengajuan(c *gin.Context) {
 
 	auth_id := c.GetInt("userId")
 	nik := c.PostForm("nik")
@@ -104,16 +98,16 @@ func (cx *Controller) KirimPengajuan(c *gin.Context)  {
 	var extTtd string
 
 	if jenis_pengajuan == "1" {
-		fileFoto, err := c.FormFile("foto") 
+		fileFoto, err := c.FormFile("foto")
 		if err != nil {
 			c.JSON(http.StatusBadGateway, domain.JsonResponse(http.StatusBadGateway, "Gagal upload file", domain.Empty{}))
-				return
+			return
 		}
 
-		fileKtp, err := c.FormFile("ktp") 
+		fileKtp, err := c.FormFile("ktp")
 		if err != nil {
 			c.JSON(http.StatusBadGateway, domain.JsonResponse(http.StatusBadGateway, "Gagal upload file", domain.Empty{}))
-				return
+			return
 		}
 
 		if fileFoto.Size > maxFileSize || fileKtp.Size > maxFileSize {
@@ -121,7 +115,7 @@ func (cx *Controller) KirimPengajuan(c *gin.Context)  {
 			return
 		}
 
-		if !isAllowedExtension(fileFoto.Filename, []string{".jpg", ".jpeg"}) ||  !isAllowedExtension(fileKtp.Filename, []string{".jpg", ".jpeg"}) {
+		if !isAllowedExtension(fileFoto.Filename, []string{".jpg", ".jpeg"}) || !isAllowedExtension(fileKtp.Filename, []string{".jpg", ".jpeg"}) {
 			c.JSON(http.StatusBadRequest, domain.JsonResponse(http.StatusBadRequest, "Format file harus jpg atau jpeg", domain.Empty{}))
 			return
 		}
@@ -144,13 +138,13 @@ func (cx *Controller) KirimPengajuan(c *gin.Context)  {
 	}
 
 	if jenis_pengajuan == "2" || jenis_pengajuan == "6" {
-		fileKtp, err := c.FormFile("ktp") 
+		fileKtp, err := c.FormFile("ktp")
 		if err != nil {
 			c.JSON(http.StatusBadGateway, domain.JsonResponse(http.StatusBadGateway, "Gagal upload file", domain.Empty{}))
 			return
 		}
 
-		if fileKtp.Size > maxFileSize  {
+		if fileKtp.Size > maxFileSize {
 			c.JSON(http.StatusBadRequest, domain.JsonResponse(http.StatusBadRequest, "Ukuran file max 2 MB", domain.Empty{}))
 			return
 		}
@@ -172,13 +166,13 @@ func (cx *Controller) KirimPengajuan(c *gin.Context)  {
 	}
 
 	if jenis_pengajuan == "3" {
-		fileFoto, err := c.FormFile("fileTtd") 
+		fileFoto, err := c.FormFile("fileTtd")
 		if err != nil {
 			c.JSON(http.StatusBadGateway, domain.JsonResponse(http.StatusBadGateway, "Gagal upload file", domain.Empty{}))
-				return
+			return
 		}
 
-		if fileFoto.Size > maxFileSize  {
+		if fileFoto.Size > maxFileSize {
 			c.JSON(http.StatusBadRequest, domain.JsonResponse(http.StatusBadRequest, "Ukuran file max 2 MB", domain.Empty{}))
 			return
 		}
@@ -198,32 +192,31 @@ func (cx *Controller) KirimPengajuan(c *gin.Context)  {
 		}
 	}
 
-
 	jsonData := domain.PengajuanParam{
-		AuthId: int64(auth_id),
-		Nama: nama,
-		JenisKelamin: handleEmpty(jenis_kelamin),
-		Nik: handleEmpty(nik),
-		Phone: handleEmpty(phone),
-		Agama: handleEmpty(agama),
-		Pekerjaan: handleEmpty(pekerjaan),
-		TempatLahir: handleEmpty(tempat_lahir),
-		TanggalLahir: handleEmpty(tanggal_lahir),
-		KepalaKeluarga: handleEmpty(kepala_keluarga),
-		NomorKk: handleEmpty(nomor_kk),
-		Alamat: handleEmpty(alamat),
-		Alasan: handleEmpty(alasan),
-		JenisPengajuan: int8(domain.StringToInt(jenis_pengajuan)),
-		Keperluan: handleEmpty(keperluan),
-		StatusPerkawinan:handleEmpty(status_perkawinan),
-		JenisUsaha: handleEmpty(jenis_usaha),
-		NamaAnak: handleEmpty(nama_anak),
-		NamaIbu: handleEmpty(nama_ibu),
-		NamaAyah: handleEmpty(nama_ayah),
-		NamaPengaju: handleEmpty(nama_pengaju),
+		AuthId:           int64(auth_id),
+		Nama:             nama,
+		JenisKelamin:     handleEmpty(jenis_kelamin),
+		Nik:              handleEmpty(nik),
+		Phone:            handleEmpty(phone),
+		Agama:            handleEmpty(agama),
+		Pekerjaan:        handleEmpty(pekerjaan),
+		TempatLahir:      handleEmpty(tempat_lahir),
+		TanggalLahir:     handleEmpty(tanggal_lahir),
+		KepalaKeluarga:   handleEmpty(kepala_keluarga),
+		NomorKk:          handleEmpty(nomor_kk),
+		Alamat:           handleEmpty(alamat),
+		Alasan:           handleEmpty(alasan),
+		JenisPengajuan:   int8(domain.StringToInt(jenis_pengajuan)),
+		Keperluan:        handleEmpty(keperluan),
+		StatusPerkawinan: handleEmpty(status_perkawinan),
+		JenisUsaha:       handleEmpty(jenis_usaha),
+		NamaAnak:         handleEmpty(nama_anak),
+		NamaIbu:          handleEmpty(nama_ibu),
+		NamaAyah:         handleEmpty(nama_ayah),
+		NamaPengaju:      handleEmpty(nama_pengaju),
 		JenisKelaminAnak: handleEmpty(jenis_kelamin_anak),
-		HubunganPengaju: handleEmpty(hubungan_pengaju),
-		Status: 0,
+		HubunganPengaju:  handleEmpty(hubungan_pengaju),
+		Status:           0,
 	}
 
 	jsonData.CreatedAt = domain.TimeNow()

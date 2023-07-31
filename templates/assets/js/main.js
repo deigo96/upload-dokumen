@@ -28,6 +28,10 @@ function RedirectLogin(url) {
   window.location.href = url
 }
 
+function RedirectUrl(url) {
+  window.location.href = url
+}
+
 function ReloadPage() {
   location.reload()
 }
@@ -55,10 +59,8 @@ async function validateToken(url) {
     });
 
     if (!response.ok) {
-      console.log(response);
       return false;
     } else {
-      console.log(response.status);
       return true;
     }
   } catch (error) {
