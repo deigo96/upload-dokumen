@@ -103,8 +103,6 @@ func (cx *Controller) InActiveAdmin(c *gin.Context)  {
 
 func (cx *Controller) ActivationAdmin(c *gin.Context)  {
 	id := domain.StringToInt(c.Param("id"))
-	active := true
-	fmt.Println(active)
 	
 	if err := cx.Repo.InActiveAuth(id, true);err != nil {
 		c.JSON(http.StatusInternalServerError, domain.JsonResponse(500, err.Error(), domain.Empty{}))
@@ -112,4 +110,21 @@ func (cx *Controller) ActivationAdmin(c *gin.Context)  {
 	}
 
 	c.JSON(200, domain.JsonResponse(200, "Success", domain.Empty{}))
+}
+
+func (cx *Controller) RedirectUrl(c *gin.Context)  {
+	tipe := c.Param("type")
+	token := c.Query("token")
+
+	if tipe == "" || token == "" {
+		c.HTML(500, "page-404.html", gin.H{})
+		return
+	}
+
+	c.Header("Authorization", "Bearer "+token)
+	redirectUrl := cx.Env()+tipe
+	fmt.Print(token)
+	fmt.Print(redirectUrl)
+	c.Header("Location", redirectUrl)
+	c.AbortWithStatus(307)
 }

@@ -15,7 +15,9 @@
 
   <!-- Google Fonts -->
   <link href="https://fonts.gstatic.com" rel="preconnect">
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+    rel="stylesheet">
 
   <!-- Vendor CSS Files -->
   <link href="admin/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -127,7 +129,7 @@
         </a>
         <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
-            <a href="surat-domisili">
+            <a id="redirect-link" href="">
               <i class="bi bi-circle"></i><span>Surat Domisili</span>
             </a>
           </li>
@@ -192,7 +194,8 @@
                     </div>
                     <div class="ps-3">
                       <h6>145</h6>
-                      <span class="text-success small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">increase</span>
+                      <span class="text-success small pt-1 fw-bold">12%</span> <span
+                        class="text-muted small pt-2 ps-1">increase</span>
 
                     </div>
                   </div>
@@ -213,7 +216,8 @@
                     </div>
                     <div class="ps-3">
                       <h6>23</h6>
-                      <span class="text-success small pt-1 fw-bold">8%</span> <span class="text-muted small pt-2 ps-1">increase</span>
+                      <span class="text-success small pt-1 fw-bold">8%</span> <span
+                        class="text-muted small pt-2 ps-1">increase</span>
 
                     </div>
                   </div>
@@ -235,7 +239,8 @@
                     </div>
                     <div class="ps-3">
                       <h6>1244</h6>
-                      <span class="text-danger small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">decrease</span>
+                      <span class="text-danger small pt-1 fw-bold">12%</span> <span
+                        class="text-muted small pt-2 ps-1">decrease</span>
 
                     </div>
                   </div>
@@ -341,7 +346,8 @@
     </div>
   </footer><!-- End Footer -->
 
-  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
 
   <!-- Vendor JS Files -->
   <script src="admin/vendor/apexcharts/apexcharts.min.js"></script>
@@ -367,6 +373,25 @@
   console.log(url);
 
   function daftarAdmin() {
-    
+
+  }
+
+  const redirectLink = document.getElementById('redirect-link');
+
+  redirectLink.addEventListener('click', redirectToAuthorizedURL);
+
+  function redirectToAuthorizedURL() {
+    let url = "{{.url}}"
+    // Replace this with your actual authorization token retrieval logic
+    const authToken = "YOUR_AUTHORIZATION_TOKEN";
+
+    // Replace this with the URL where you want to redirect the user
+    const redirectURL = url+"redirect/surat-domisili?token="+GetToken()
+
+    // Set the URL of the anchor element with the redirect URL
+    redirectLink.href = redirectURL;
+
+    // Set the Authorization header in the anchor element
+    redirectLink.setAttribute("Authorization", "Bearer " + authToken);
   }
 </script>

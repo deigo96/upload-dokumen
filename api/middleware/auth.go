@@ -14,9 +14,13 @@ func ValidateJwt(secret string) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		authHeader := c.Request.Header.Get("Authorization")
 		if authHeader == "" {
-			c.HTML(http.StatusUnauthorized, "login.html", gin.H{})
-			c.Abort()
-			return
+			token := c.Query("token")
+			if token == "" {
+				c.HTML(http.StatusUnauthorized, "login.html", gin.H{})
+				c.Abort()
+				return
+			}
+			authHeader = "Bearer "+token
 		}
 
 		t := strings.Split(authHeader, " ")

@@ -60,3 +60,11 @@ func (r *repo) CreatePengajuan(req domain.PengajuanParam) error {
 
 	return nil
 }
+
+func (r *repo) GetDocumentsUser(authId int) (record []domain.Documents, err error) {
+	if err := r.db.Table("pengajuan_dokumen pd").Joins("JOIN master_pengajuan mp ON pd.jenis_pengajuan = mp.id_jenis_pengajuan").Where("pd.auth_id = ?", authId).Order("pd.updated_at DESC").Scan(&record).Error ; err != nil {
+		return nil, errors.New("internal server error")
+	}
+
+	return record, nil
+}

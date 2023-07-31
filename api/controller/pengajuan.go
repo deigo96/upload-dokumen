@@ -62,9 +62,22 @@ func (cx *Controller) PengajuanSku(c *gin.Context) {
 }
 
 func (cx *Controller) ListDokumen(c *gin.Context) {
-	fmt.Print(c.Request.Header.Get("Authorization"))
+	auth_id := c.GetInt("userId")
+	if auth_id == 0 {
+		c.HTML(http.StatusUnauthorized, "login.html", gin.H{})
+		return
+	}
 
-	c.HTML(200, "list-document.html", gin.H{})
+	documents, err := cx.Repo.GetDocumentsUser(auth_id)
+	if err != nil {
+		c.HTML(500, "page-404.html", gin.H{})
+		return
+	}
+
+	c.HTML(200, "list-document.html", gin.H{
+		"url": cx.Env(),
+		"data": documents,
+	})
 }
 
 func (cx *Controller) KirimPengajuan(c *gin.Context) {
@@ -124,13 +137,13 @@ func (cx *Controller) KirimPengajuan(c *gin.Context) {
 		extKtp = domain.GenerateUuid() + filepath.Ext(fileKtp.Filename)
 
 		// Save the uploaded file to a specific location (e.g., ./uploads)
-		destination := filepath.Join("./uploads/foto", extFoto)
+		destination := filepath.Join("./uploads/users", extFoto)
 		if err := c.SaveUploadedFile(fileFoto, destination); err != nil {
 			c.JSON(http.StatusInternalServerError, domain.JsonResponse(http.StatusInternalServerError, "Failed to save file", domain.Empty{}))
 			return
 		}
 
-		destinationKtp := filepath.Join("./uploads/ktp", extKtp)
+		destinationKtp := filepath.Join("./uploads/users", extKtp)
 		if err := c.SaveUploadedFile(fileKtp, destinationKtp); err != nil {
 			c.JSON(http.StatusInternalServerError, domain.JsonResponse(http.StatusInternalServerError, "Failed to save file", domain.Empty{}))
 			return
@@ -157,7 +170,7 @@ func (cx *Controller) KirimPengajuan(c *gin.Context) {
 		extKtp = domain.GenerateUuid() + filepath.Ext(fileKtp.Filename)
 
 		// Save the uploaded file to a specific location (e.g., ./uploads)
-		destination := filepath.Join("./uploads/ktp", extKtp)
+		destination := filepath.Join("./uploads/users", extKtp)
 		if err := c.SaveUploadedFile(fileKtp, destination); err != nil {
 			fmt.Println(err)
 			c.JSON(http.StatusInternalServerError, domain.JsonResponse(http.StatusInternalServerError, "Failed to save file", domain.Empty{}))
@@ -185,7 +198,7 @@ func (cx *Controller) KirimPengajuan(c *gin.Context) {
 		extTtd = domain.GenerateUuid() + filepath.Ext(fileFoto.Filename)
 
 		// Save the uploaded file to a specific location (e.g., ./uploads)
-		destination := filepath.Join("./uploads/tanda-tangan", extTtd)
+		destination := filepath.Join("./uploads/users", extTtd)
 		if err := c.SaveUploadedFile(fileFoto, destination); err != nil {
 			c.JSON(http.StatusInternalServerError, domain.JsonResponse(http.StatusInternalServerError, "Failed to save file", domain.Empty{}))
 			return

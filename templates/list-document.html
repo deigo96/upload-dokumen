@@ -45,19 +45,27 @@
   <header id="header" class="fixed-top header-inner-pages">
     <div class="container d-flex align-items-center">
 
-      <h1 class="logo me-auto"><a href="index.html">Sragen</a></h1>
+      <h1 class="logo me-auto"><a href="{{.url}}">DESA BENDO</a></h1>
       <!-- Uncomment below if you prefer to use an image logo -->
       <!-- <a href="index.html" class="logo me-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
       <nav id="navbar" class="navbar">
         <ul>
-          <li><a class="nav-link scrollto " href="index.html">Home</a></li>
-          <li><a class="nav-link scrollto" href="index.html#about">About</a></li>
-          <li><a class="nav-link scrollto" href="index.html#services">Services</a></li>
-          <li><a class="nav-link scrollto" href="index.html#portfolio">Portfolio</a></li>
-          <li><a class="nav-link scrollto" href="index.html#team">Team</a></li>
-          <li><a class="nav-link scrollto" href="index.html#contact">Contact</a></li>
-          <li><a class="getstarted scrollto" href="login.html">Login</a></li>
+          <li><a class="nav-link scrollto active" href="{{.url}}#hero">Home</a></li>
+          <li><a class="nav-link scrollto" href="{{.url}}#services">Layanan</a></li>
+          <li><a class="nav-link scrollto" href="{{.url}}#about">Tentang</a></li>
+          <li><a class="nav-link scrollto" href="{{.url}}#team">Perangkat</a></li>
+          <li><a class="nav-link scrollto" href="{{.url}}#contact">Kontak</a></li>
+          <li class="dropdown"><a href="#"><span id="profileDrowpdown"></span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+              <li>
+                <a class="dropdown-item d-flex align-items-center" href="#" onclick="LogOut('{{.url}}login')">
+                  <span>Sign Out</span>
+                  <i class="bi bi-box-arrow-right"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
@@ -81,66 +89,94 @@
     </section><!-- End Breadcrumbs -->
 
     <section class="team section-bg">
-        <div class="container" data-aos="fade-up">
-  
-          <div class="row">
-  
-            <div class="col-lg-6" data-aos="zoom-in" data-aos-delay="100">
-              <div class="member d-flex align-items-start">
-                <div class="member-info">
-                  <h4>Disetujui</h4>
-                  <span>Surat Domisili</span>
-                  <p>Explicabo voluptatem mollitia et repellat qui dolorum quasi</p>
-                  <div class="social">
-                    <a href="" download="list-document.html"><i class="ri-download-fill"></i></a>
-                  </div>
+      <div class="container" data-aos="fade-up">
+
+        <div class="row">
+
+          <!-- <div class="col-lg-6" data-aos="zoom-in" data-aos-delay="100">
+            <div class="member d-flex align-items-start">
+              <div class="member-info">
+                <h4>Disetujui</h4>
+                <span>Surat Domisili</span>
+                <p>Explicabo voluptatem mollitia et repellat qui dolorum quasi</p>
+                <div class="social">
+                  <a href="" download="list-document.html"><i class="ri-download-fill"></i></a>
                 </div>
               </div>
             </div>
-  
-            <div class="col-lg-6 mt-4 mt-lg-0" data-aos="zoom-in" data-aos-delay="200">
-              <div class="member d-flex align-items-start">
-                <div class="member-info">
-                  <h4>Menunggu</h4>
-                  <span>Surat Keterangan</span>
-                  <p>Explicabo voluptatem mollitia et repellat qui dolorum quasi</p>
-                  <div class="social">
-                    <a href=""><i class="ri-download-fill"></i></a>
-                  </div>
+          </div> -->
+          {{range .data}}
+
+          <div class="col-lg-6 mt-4 mt-lg-0 pb-3" data-aos="zoom-in" data-aos-delay="200">
+            <div class="member d-flex align-items-start">
+              <div class="member-info">
+                {{if eq .Status 0}}
+                <h4>Menunggu Persetujuan</h4>
+                {{end}}
+                {{if eq .Status 1}}
+                <h4>Disetujui</h4>
+                {{end}}
+                {{if eq .Status 2}}
+                <h4>Ditolak</h4>
+                {{end}}
+                <span>{{.NamaPengajuan}}</span>
+                {{if eq .Status 0}}
+                <p>Mohon tunggu pengajuan dokumen anda sedang diproses</p>
+                {{end}}
+                {{if eq .Status 1}}
+                <p>Proses pengajuan dokumen anda telah berhasil diproses, silahkan download dokumen dibawah</p>
+                {{end}}
+                {{if eq .Status 2}}
+                <p>.AlasanPenolakan</p>
+                {{end}}
+                {{if eq .Status 1}}
+                <div class="social">
+                  <a href="../uploads/ktp/{{.Ktp}}" download=""><i class="ri-download-fill"></i></a>
                 </div>
+                {{end}}
               </div>
             </div>
-  
-            <div class="col-lg-6 mt-4" data-aos="zoom-in" data-aos-delay="300">
-              <div class="member d-flex align-items-start">
-                <div class="member-info">
-                  <h4>Disetujui</h4>
-                  <span>Surat Domisili</span>
-                  <p>Explicabo voluptatem mollitia et repellat qui dolorum quasi</p>
-                  <div class="social">
-                    <a href=""><i class="ri-download-fill"></i></a>
-                  </div>
-                </div>
-              </div>
-            </div>
-  
-            <div class="col-lg-6 mt-4" data-aos="zoom-in" data-aos-delay="400">
-              <div class="member d-flex align-items-start">
-                <div class="member-info">
-                  <h4>Ditolak</h4>
-                  <span>Surat Kematian</span>
-                  <p>Explicabo voluptatem mollitia et repellat qui dolorum quasi</p>
-                  <div class="social">
-                    <a href=""><i class="ri-download-fill"></i></a>
-                  </div>
-                </div>
-              </div>
-            </div>
-  
           </div>
-  
+          {{end}}
+
+          <!-- <div class="col-lg-6 mt-4" data-aos="zoom-in" data-aos-delay="300">
+            <div class="member d-flex align-items-start">
+              <div class="member-info">
+                {{if eq .Status 0}}
+                <h4>Menunggu Persetujuan</h4>
+                {{end}}
+                {{if eq .Status 1}}
+                <h4>Disetujui</h4>
+                {{end}}
+                {{if eq .Status 2}}
+                <h4>Ditolak</h4>
+                {{end}}
+                <span>Surat Domisili</span>
+                <p>Explicabo voluptatem mollitia et repellat qui dolorum quasi</p>
+                <div class="social">
+                  <a href=""><i class="ri-download-fill"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6 mt-4" data-aos="zoom-in" data-aos-delay="400">
+            <div class="member d-flex align-items-start">
+              <div class="member-info">
+                <h4>Ditolak</h4>
+                <span>Surat Kematian</span>
+                <p>Explicabo voluptatem mollitia et repellat qui dolorum quasi</p>
+                <div class="social">
+                  <a href=""><i class="ri-download-fill"></i></a>
+                </div>
+              </div>
+            </div>
+          </div> -->
+
         </div>
-      </section><!-- End Team Section -->
+
+      </div>
+    </section><!-- End Team Section -->
 
   </main><!-- End #main -->
 
@@ -236,6 +272,17 @@
 </html>
 
 <script>
+  const url = '{{.url}}'
+  validateToken(url).then((isValid) => {
+    if (!isValid) {
+      RedirectLogin(url + "login")
+    } else {
+
+      profile = document.getElementById("profileDrowpdown")
+      profile.textContent += GetUsername()
+    }
+  })
+
   function kirimPengajuan() {
     let nama = document.getElementById("nama").value
     let nik = document.getElementById("nik").value
@@ -256,7 +303,7 @@
       confirmButtonText: "Kirim pengajuan",
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire("Berhasil","Pengajuan dokumen berhasil dikirim", "success");
+        Swal.fire("Berhasil", "Pengajuan dokumen berhasil dikirim", "success");
       }
     });
 

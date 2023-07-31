@@ -2,11 +2,14 @@ package controller
 
 import (
 	"desa-sragen/domain"
+	"fmt"
 
 	"github.com/gin-gonic/gin"
 )
 
 func (cx *Controller) SuratDomisili(c *gin.Context) {
+	fmt.Println(c.Request.Header.Get("Authorization"))
+	fmt.Println("hetre")
 	param := c.Query("id")
 	if param != "" {
 		c.HTML(200, "detail-pengajuan.html", gin.H{
