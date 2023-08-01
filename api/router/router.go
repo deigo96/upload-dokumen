@@ -42,7 +42,6 @@ func Setup(env *bootrstrap.Env, db bootrstrap.Databases, router *gin.RouterGroup
 	publicRoute.GET("/dashboard", cx.AdminDashboard)
 	publicRoute.GET("/daftar-admin", cx.PageAdmin)
 	publicRoute.GET("/daftar-user", cx.ListUsers)
-	publicRoute.GET("/surat-domisili", cx.SuratDomisili)
 	publicRoute.GET("/detail-pengajuan/:id", cx.DetailPengajuan)
 	protectedRoute.GET("redirect/:type", cx.RedirectUrl)
 
@@ -62,6 +61,14 @@ func Setup(env *bootrstrap.Env, db bootrstrap.Databases, router *gin.RouterGroup
 	// super
 	protectedRoute.GET("get-admin", cx.GetAllAdmin)
 	superRoute.POST("tambah-admin", cx.TambahAdmin)
+	superRoute.POST("aksi-dokumen", cx.AksiDokumen)
 	superRoute.POST("in-active-admin/:id", cx.InActiveAdmin)
 	superRoute.POST("activation-admin/:id", cx.ActivationAdmin)
+	publicRoute.GET("/surat-domisili", cx.SuratDomisili)
+	publicRoute.GET("/surat-kartu-keluarga", cx.SuratKartuKeluarga)
+	publicRoute.GET("/surat-keterangan-usaha", cx.SuratKeteranganUsaha)
+	publicRoute.GET("/surat-kelahiran", cx.SuratKelahiran)
+	publicRoute.GET("/surat-kematian", cx.SuratDomisili)
+	publicRoute.GET("/surat-kehilangan", cx.SuratDomisili)
+	publicRoute.GET("/surat-permohonan-ktp", cx.SuratDomisili)
 }

@@ -46,7 +46,7 @@
     <div class="d-flex align-items-center justify-content-between">
       <a href="dashboard" class="logo d-flex align-items-center">
         <img src="admin/img/logo.png" alt="" />
-        <span class="d-none d-lg-block">Admin Sragen</span>
+        <span class="d-none d-lg-block">Desa Bendo</span>
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div>
@@ -56,7 +56,7 @@
 
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
-        
+
 
         <li class="nav-item dropdown pe-3">
 
@@ -120,18 +120,33 @@
             </a>
           </li>
           <li>
-            <a href="forms-layouts.html">
-              <i class="bi bi-circle"></i><span>Form Layouts</span>
+            <a href="surat-kartu-keluarga">
+              <i class="bi bi-circle"></i><span>Surat Kartu Keluarga</span>
             </a>
           </li>
           <li>
-            <a href="forms-editors.html">
-              <i class="bi bi-circle"></i><span>Form Editors</span>
+            <a href="surat-keterangan-usaha">
+              <i class="bi bi-circle"></i><span>Surat Keterangan Usaha</span>
             </a>
           </li>
           <li>
-            <a href="forms-validation.html">
-              <i class="bi bi-circle"></i><span>Form Validation</span>
+            <a href="surat-kelahiran">
+              <i class="bi bi-circle"></i><span>Surat Kelahiran</span>
+            </a>
+          </li>
+          <li>
+            <a href="surat-kematin">
+              <i class="bi bi-circle"></i><span>Surat Kematian</span>
+            </a>
+          </li>
+          <li>
+            <a href="surat-kehilangan">
+              <i class="bi bi-circle"></i><span>Surat Kehilangan</span>
+            </a>
+          </li>
+          <li>
+            <a href="surat-permohonan-ktp">
+              <i class="bi bi-circle"></i><span>Surat Permohonan KTP</span>
             </a>
           </li>
         </ul>
@@ -179,8 +194,13 @@
                 <thead>
                   <tr>
                     <th scope="col">Nama</th>
+                    <th scope="col">Tempat Lahir</th>
+                    <th scope="col">Tanggal Lahir</th>
+                    <th scope="col">Status Perkawinan</th>
                     <th scope="col">Pekerjaan</th>
-                    <th scope="col">Umur</th>
+                    <th scope="col">Agama</th>
+                    <th scope="col">Keperluan</th>
+                    <th scope="col">Alamat</th>
                     <th scope="col">Tanggal Pengajuan</th>
                     <th scope="col">Aksi</th>
                   </tr>
@@ -188,17 +208,22 @@
                 <tbody>
                   {{if .items}} {{range .items}}
                   <tr>
-                    <td>{{.Name}}</td>
-                    <td>{{.Job}}</td>
-                    <td>{{.Age}}</td>
-                    <td>{{.CreatedAt}}</td>
+                    <td>{{.Nama}}</td>
+                    <td>{{.TempatLahir}}</td>
+                    <td>{{.TanggalLahir.Format "2 Jan, 2006"}}</td>
+                    <td>{{.StatusPerkawinan}}</td>
+                    <td>{{.Pekerjaan}}</td>
+                    <td>{{.Agama}}</td>
+                    <td>{{.Keperluan}}</td>
+                    <td>{{.Alamat}}</td>
+                    <td>{{.CreatedAt.Format "01-02-2006 15:04:05"}}</td>
                     <td>
-                      <a href="/surat-domisili?id={{.Id}}" class="btn btn-primary btn-small">Detail</a>
+                      <a href="/surat-domisili?id={{.IdPengajuan}}" class="btn btn-primary btn-small">Detail</a>
                     </td>
                   </tr>
                   {{end}} {{end}}
                 </tbody>
-              
+
               </table>
               <!-- End Table with stripped rows -->
             </div>
@@ -241,8 +266,13 @@
   <script src="admin/js/main.js"></script>
 
   <script>
-     let url = '{{.url}}'
     SetProfile()
+    const url = '{{.url}}'
+    validateToken(url).then((isValid) => {
+      if (!isValid) {
+        RedirectLogin(url + "login")
+      }
+    })
   </script>
 </body>
 

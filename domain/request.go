@@ -31,7 +31,7 @@ type Documents struct {
 	TempatLahir  string `json:"tempat_lahir"`
 	KepalaKeluarga  string `json:"kepala_keluarga"`
 	NomorKk string `json:"nomor_kk"`
-	TanggalLahir string `form:"tanggal_lahir" time_format:"2006-01-02" json:"tanggal_lahir"`
+	TanggalLahir time.Time `form:"tanggal_lahir" time_format:"2006-01-02" json:"tanggal_lahir"`
 	Alamat string `json:"alamat"`
 	Foto string `json:"foto"`
 	Ktp string `json:"ktp"`
@@ -53,4 +53,5 @@ type Documents struct {
 	HubunganPengaju string `json:"hubungan_pengaju"`
 	NamaPengajuan string `json:"nama_pengajuan"`
 	AlasanPenolakan string `json:"alasan_penolakan"`
+	Dokumen string `json:"dokumen"`
 }

@@ -134,18 +134,33 @@
             </a>
           </li>
           <li>
-            <a href="forms-layouts.html">
-              <i class="bi bi-circle"></i><span>Kartu Keluarga</span>
+            <a href="surat-kartu-keluarga">
+              <i class="bi bi-circle"></i><span>Surat Kartu Keluarga</span>
             </a>
           </li>
           <li>
-            <a href="forms-editors.html">
-              <i class="bi bi-circle"></i><span>Form Editors</span>
+            <a href="surat-keterangan-usaha">
+              <i class="bi bi-circle"></i><span>Surat Keterangan Usaha</span>
             </a>
           </li>
           <li>
-            <a href="forms-validation.html">
-              <i class="bi bi-circle"></i><span>Form Validation</span>
+            <a href="surat-kelahiran">
+              <i class="bi bi-circle"></i><span>Surat Kelahiran</span>
+            </a>
+          </li>
+          <li>
+            <a href="surat-kematian">
+              <i class="bi bi-circle"></i><span>Surat Kematian</span>
+            </a>
+          </li>
+          <li>
+            <a href="surat-kehilangan">
+              <i class="bi bi-circle"></i><span>Surat Kehilangan</span>
+            </a>
+          </li>
+          <li>
+            <a href="surat-permohonan-ktp">
+              <i class="bi bi-circle"></i><span>Surat Permohonan KTP</span>
             </a>
           </li>
         </ul>
@@ -157,7 +172,12 @@
           <span>Daftar Admin</span>
         </a>
       </li><!-- End Dashboard Nav -->
-
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="daftar-admin">
+          <i class="bi bi-people"></i>
+          <span>Daftar User</span>
+        </a>
+      </li><!-- End Dashboard Nav -->
     </ul>
 
   </aside><!-- End Sidebar-->
@@ -367,10 +387,15 @@
 </html>
 
 <script>
-  SetProfile()
   const url = '{{.url}}'
-  validateToken(url)
-  console.log(url);
+  document.addEventListener("DOMContentLoaded", function () {
+    validateToken(url).then((isValid) => {
+      if (!isValid) {
+        RedirectLogin(url + "login")
+      }
+    })
+  });
+  SetProfile()
 
   function daftarAdmin() {
 
@@ -386,7 +411,7 @@
     const authToken = "YOUR_AUTHORIZATION_TOKEN";
 
     // Replace this with the URL where you want to redirect the user
-    const redirectURL = url+"redirect/surat-domisili?token="+GetToken()
+    const redirectURL = url + "redirect/surat-domisili?token=" + GetToken()
 
     // Set the URL of the anchor element with the redirect URL
     redirectLink.href = redirectURL;

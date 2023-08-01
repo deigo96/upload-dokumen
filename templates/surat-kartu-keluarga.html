@@ -120,7 +120,7 @@
             </a>
           </li>
           <li>
-            <a href="surat-kartu-keluarga">
+            <a href="#" class="active">
               <i class="bi bi-circle"></i><span>Surat Kartu Keluarga</span>
             </a>
           </li>
@@ -130,12 +130,12 @@
             </a>
           </li>
           <li>
-            <a href="#" class="active">
+            <a href="surat-kelahiran">
               <i class="bi bi-circle"></i><span>Surat Kelahiran</span>
             </a>
           </li>
           <li>
-            <a href="surat-kematian">
+            <a href="surat-kematin">
               <i class="bi bi-circle"></i><span>Surat Kematian</span>
             </a>
           </li>
@@ -194,13 +194,11 @@
                 <thead>
                   <tr>
                     <th scope="col">Nama</th>
-                    <th scope="col">Tanggal Lahir</th>
-                    <th scope="col">Tempat Lahir</th>
-                    <th scope="col">Jenis Kelamin</th>
-                    <th scope="col">Nama Ibu</th>
-                    <th scope="col">Nama Ayah</th>
-                    <th scope="col">Pengaju</th>
-                    <th scope="col">Hubungan Pengaju</th>
+                    <th scope="col">NIK</th>
+                    <th scope="col">Kepala Keluarga</th>
+                    <th scope="col">Kartu Keluarga</th>
+                    <th scope="col">Agama</th>
+                    <th scope="col">Alasan Pengajuan</th>
                     <th scope="col">Alamat</th>
                     <th scope="col">Tanggal Pengajuan</th>
                     <th scope="col">Aksi</th>
@@ -209,18 +207,16 @@
                 <tbody>
                   {{if .items}} {{range .items}}
                   <tr>
-                    <td>{{.NamaAnak}}</td>
-                    <td>{{.TanggalLahir.Format "02 Jan, 2006"}}</td>
-                    <td>{{.TempatLahir}}</td>
-                    <td>{{.JenisKelaminAnak}}</td>
-                    <td>{{.NamaIbu}}</td>
-                    <td>{{.NamaAyah}}</td>
-                    <td>{{.NamaPengaju}}</td>
-                    <td>{{.HubunganPengaju}}</td>
+                    <td>{{.Nama}}</td>
+                    <td>{{.Nik}}</td>
+                    <td>{{.KepalaKeluarga}}</td>
+                    <td>{{.NomorKk}}</td>
+                    <td>{{.Agama}}</td>
+                    <td>{{.Alasan}}</td>
                     <td>{{.Alamat}}</td>
                     <td>{{.CreatedAt.Format "01-02-2006 15:04:05"}}</td>
                     <td>
-                      <a href="/surat-kelahiran?id={{.IdPengajuan}}" class="btn btn-primary btn-small">Detail</a>
+                      <a href="/surat-kartu-keluarga?id={{.IdPengajuan}}" class="btn btn-primary btn-small">Detail</a>
                     </td>
                   </tr>
                   {{end}} {{end}}

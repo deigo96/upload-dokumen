@@ -47,3 +47,11 @@ type PengajuanParam struct {
 	JenisKelaminAnak *string `json:"jenis_kelamin_anak"`
 	HubunganPengaju *string `json:"hubungan_pengaju"`
 }
+
+type Aksi struct {
+	Status int8 
+	Dokumen *string
+	AlasanPenolakan *string
+	UpdatedAt time.Time
+	UpdatedBy int
+}

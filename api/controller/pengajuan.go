@@ -70,7 +70,9 @@ func (cx *Controller) ListDokumen(c *gin.Context) {
 
 	documents, err := cx.Repo.GetDocumentsUser(auth_id)
 	if err != nil {
-		c.HTML(500, "page-404.html", gin.H{})
+		c.HTML(500, "page-404.html", gin.H{
+			"url": cx.Env(),
+		})
 		return
 	}
 

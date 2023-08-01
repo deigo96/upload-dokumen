@@ -192,27 +192,13 @@
                   <input type="text" class="form-control" value="{{.items.Nama}}" id="inputNanme4" readonly />
                 </div>
                 <div class="col-12">
-                  <label for="inputEmail4" class="form-label">Tempat Lahir</label>
-                  <input type="text" class="form-control" value="{{.items.TempatLahir}}" id="inputEmail4" readonly />
+                  <label for="inputEmail4" class="form-label">Pekerjaan</label>
+                  <input type="text" class="form-control" value="{{.items.Pekerjaan}}" id="inputEmail4" readonly />
                 </div>
                 <div class="col-12">
-                  <label for="inputNanme4" class="form-label">Tanggal Lahir</label>
-                  <input type="text" class="form-control" value='{{.items.TanggalLahir.Format "02 Jan, 2006"}}'
+                  <label for="inputNanme4" class="form-label">Jenis Usaha</label>
+                  <input type="text" class="form-control" value='{{.items.JenisUsaha}}'
                     id="inputNanme4" readonly />
-                </div>
-                <div class="col-12">
-                  <label for="inputNanme4" class="form-label">Status Perkawinan</label>
-                  <input type="text" value="{{.items.StatusPerkawinan}}" class="form-control" id="inputNanme4"
-                    readonly />
-                </div>
-                <div class="col-12">
-                  <label for="inputNanme4" class="form-label">Agama</label>
-                  <input type="text" value="{{.items.Agama}}" class="form-control" id="inputNanme4" readonly />
-                </div>
-                <div class="col-12">
-                  <label for="inputNanme4" class="form-label">Keperluan</label>
-                  <textarea name="alamat" class="form-control" id="" cols="3" rows="3"
-                    readonly>{{.items.Keperluan}}</textarea>
                 </div>
                 <div class="col-12">
                   <label for="inputNanme4" class="form-label">Alamat</label>
@@ -223,25 +209,7 @@
                   <div class="col-lg-6">
                     <div class="card">
                       <div class="card-body">
-                        <h5 class="card-title">Foto</h5>
-
-                        <!-- Slides only carousel -->
-                        <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
-                          <div class="carousel-inner">
-                            <div class="carousel-item active">
-                              <a href="../uploads/users/{{.items.Foto}}" target="_blank">
-                                <img src="../uploads/users/{{.items.Foto}}" class="d-block w-100" alt="...">
-                              </a>
-                            </div>
-                          </div><!-- End Slides only carousel-->
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-lg-6">
-                    <div class="card">
-                      <div class="card-body">
-                        <h5 class="card-title">KTP</h5>
+                        <h5 class="card-title">Foto KTP</h5>
 
                         <!-- Slides only carousel -->
                         <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">

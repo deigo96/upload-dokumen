@@ -33,7 +33,7 @@ func main() {
 	route := r.Group("")
 	r.NoRoute(func(ctx *gin.Context) {
 		ctx.HTML(200, "page-404.html", gin.H{
-		
+			"url": app.Env.ServerUrl,
 		})
 	})
 	router.Setup(app.Env, *db, route)

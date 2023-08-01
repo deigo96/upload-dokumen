@@ -125,17 +125,17 @@
             </a>
           </li>
           <li>
-            <a href="surat-keterangan-usaha">
+            <a href="#" class="active">
               <i class="bi bi-circle"></i><span>Surat Keterangan Usaha</span>
             </a>
           </li>
           <li>
-            <a href="#" class="active">
+            <a href="surat-kelahiran">
               <i class="bi bi-circle"></i><span>Surat Kelahiran</span>
             </a>
           </li>
           <li>
-            <a href="surat-kematian">
+            <a href="surat-kematin">
               <i class="bi bi-circle"></i><span>Surat Kematian</span>
             </a>
           </li>
@@ -194,13 +194,8 @@
                 <thead>
                   <tr>
                     <th scope="col">Nama</th>
-                    <th scope="col">Tanggal Lahir</th>
-                    <th scope="col">Tempat Lahir</th>
-                    <th scope="col">Jenis Kelamin</th>
-                    <th scope="col">Nama Ibu</th>
-                    <th scope="col">Nama Ayah</th>
-                    <th scope="col">Pengaju</th>
-                    <th scope="col">Hubungan Pengaju</th>
+                    <th scope="col">Pekerjaan</th>
+                    <th scope="col">Jenis Usaha</th>
                     <th scope="col">Alamat</th>
                     <th scope="col">Tanggal Pengajuan</th>
                     <th scope="col">Aksi</th>
@@ -209,18 +204,13 @@
                 <tbody>
                   {{if .items}} {{range .items}}
                   <tr>
-                    <td>{{.NamaAnak}}</td>
-                    <td>{{.TanggalLahir.Format "02 Jan, 2006"}}</td>
-                    <td>{{.TempatLahir}}</td>
-                    <td>{{.JenisKelaminAnak}}</td>
-                    <td>{{.NamaIbu}}</td>
-                    <td>{{.NamaAyah}}</td>
-                    <td>{{.NamaPengaju}}</td>
-                    <td>{{.HubunganPengaju}}</td>
+                    <td>{{.Nama}}</td>
+                    <td>{{.Pekerjaan}}</td>
+                    <td>{{.JenisUsaha}}</td>
                     <td>{{.Alamat}}</td>
                     <td>{{.CreatedAt.Format "01-02-2006 15:04:05"}}</td>
                     <td>
-                      <a href="/surat-kelahiran?id={{.IdPengajuan}}" class="btn btn-primary btn-small">Detail</a>
+                      <a href="/surat-keterangan-usaha?id={{.IdPengajuan}}" class="btn btn-primary btn-small">Detail</a>
                     </td>
                   </tr>
                   {{end}} {{end}}

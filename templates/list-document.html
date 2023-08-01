@@ -127,11 +127,11 @@
                 <p>Proses pengajuan dokumen anda telah berhasil diproses, silahkan download dokumen dibawah</p>
                 {{end}}
                 {{if eq .Status 2}}
-                <p>.AlasanPenolakan</p>
+                <p>{{.AlasanPenolakan}}</p>
                 {{end}}
                 {{if eq .Status 1}}
                 <div class="social">
-                  <a href="../uploads/ktp/{{.Ktp}}" download=""><i class="ri-download-fill"></i></a>
+                  <a href="../uploads/dokumen/{{.Dokumen}}" download=""><i class="ri-download-fill"></i></a>
                 </div>
                 {{end}}
               </div>

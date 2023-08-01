@@ -15,7 +15,9 @@ function GetToken() {
 function RemoveLocalStorage(){
   localStorage.clear();
 }
-
+function ReloadPage() {
+  location.reload()
+}
 function RedirectLogin(url) {
   RemoveLocalStorage()
   window.location.href = url
@@ -33,26 +35,25 @@ function GetRole() {
   return localStorage.getItem("role")
 }
 
-function validateToken(url) {
-  fetch(url+'validate-token', {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": `Bearer ${GetToken()}`,
-    },
-  }).then((response) => {
+async function validateToken(url) {
+  try {
+    const response = await fetch(url + 'validate-token', {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${GetToken()}`,
+      },
+    });
+
     if (!response.ok) {
-      RedirectLogin(`${url}login`)
-      return
+      return false;
+    } else {
+      return true;
     }
-    return response.json()
-  }).then((data) => {
-    if (data.code != 200) {
-      RedirectLogin(`${url}login`)
-      return
-    }
-    return true
-  })
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
 }
 
 function SetProfile() {
