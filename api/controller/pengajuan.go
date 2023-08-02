@@ -78,7 +78,7 @@ func (cx *Controller) ListDokumen(c *gin.Context) {
 	}
 
 	c.HTML(200, "list-document.html", gin.H{
-		"url": cx.Env(),
+		"url":  cx.Env(),
 		"data": documents,
 	})
 }
@@ -110,6 +110,7 @@ func (cx *Controller) KirimPengajuan(c *gin.Context) {
 	hubungan_pengaju := c.PostForm("hubungan_pengaju")
 	hari_meninggal := c.PostForm("hari_meninggal")
 	benda_hilang := c.PostForm("benda_hilang")
+	umur := c.PostForm("umur")
 
 	var extFoto string
 	var extKtp string
@@ -211,6 +212,8 @@ func (cx *Controller) KirimPengajuan(c *gin.Context) {
 		}
 	}
 
+	umurs := domain.StringToInt(umur)
+
 	jsonData := domain.PengajuanParam{
 		AuthId:           int64(auth_id),
 		Nama:             nama,
@@ -236,8 +239,9 @@ func (cx *Controller) KirimPengajuan(c *gin.Context) {
 		JenisKelaminAnak: handleEmpty(jenis_kelamin_anak),
 		HubunganPengaju:  handleEmpty(hubungan_pengaju),
 		Status:           0,
-		HariMeninggal: handleEmpty(hari_meninggal),
-		BendaHilang: handleEmpty(benda_hilang),
+		HariMeninggal:    handleEmpty(hari_meninggal),
+		BendaHilang:      handleEmpty(benda_hilang),
+		Umur:             &umurs,
 	}
 
 	jsonData.CreatedAt = domain.TimeNow()

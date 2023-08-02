@@ -101,54 +101,55 @@
                 <label for="name">Nama Lengkap</label>
                 <input type="text" class="form-control" name="nama" id="nama" required>
               </div>
-            <div class="form-group mt-4">
-              <label for="name">NIK</label>
-              <input type="text" class="form-control" name="nik" id="nik" required>
-            </div>
-            <div class="form-group mt-4">
-              <label for="name">Pekerjaan</label>
-              <input type="text" class="form-control" name="pekerjaan" id="pekerjaan" required>
-            </div>
-            <div class="form-group mt-4">
-              <label for="name">Tanggal Lahir</label>
-              <input type="date" class="form-control" name="tgl_lahir" id="tgl_lahir" required>
-            </div>
-            <div class="form-group mt-4">
-              <label for="name">Agama</label>
-              <select name="agama" id="agama" class="form-control">
-                <option selected>Pilih Agama ---</option>
-                <option value="Islam">Islam</option>
-                <option value="Kristen Protestan">Kristen Protestan</option>
-                <option value="Katolik">Katolik</option>
-                <option value="Budha">Budha</option>
-                <option value="Hindu">Hindu</option>
-                <option value="Konghucu">Konghucu</option>
-                <option value="Lainnya">Lainnya</option>
-              </select>
-            </div>
-            <div class="form-group mt-4">
-              <label for="name">Benda Yang Hilang</label>
-              <input type="text" class="form-control" name="benda_hilang" id="benda_hilang" required>
-            </div>
-            <div class="form-group mt-4">
-              <label for="name">Upload KTP</label>
-              <input type="file" class="form-control" name="fileKtp" id="fileKtp" required>
-              <i class="" style="color: red;">file jpg, jpeg max 1MB</i>
-            </div>
-            <div class="form-group mt-4">
-              <label for="name">Alamat</label>
-              <textarea class="form-control" name="alamat" id="alamat" rows="3" required></textarea>
-            </div>
-            <div class="form-group mt-4">
-              <label for="name">Alasan Pengajuan</label>
-              <textarea class="form-control" name="alasan_pengajuan" id="alasan_pengajuan" rows="3" required></textarea>
-            </div>
-            <div class="mt-4"><button style="background: #47b2e4;
+              <div class="form-group mt-4">
+                <label for="name">NIK</label>
+                <input type="text" class="form-control" name="nik" id="nik" required>
+              </div>
+              <div class="form-group mt-4">
+                <label for="name">Pekerjaan</label>
+                <input type="text" class="form-control" name="pekerjaan" id="pekerjaan" required>
+              </div>
+              <div class="form-group mt-4">
+                <label for="name">Tanggal Lahir</label>
+                <input type="date" class="form-control" name="tgl_lahir" id="tgl_lahir" required>
+              </div>
+              <div class="form-group mt-4">
+                <label for="name">Agama</label>
+                <select name="agama" id="agama" class="form-control">
+                  <option selected>Pilih Agama ---</option>
+                  <option value="Islam">Islam</option>
+                  <option value="Kristen Protestan">Kristen Protestan</option>
+                  <option value="Katolik">Katolik</option>
+                  <option value="Budha">Budha</option>
+                  <option value="Hindu">Hindu</option>
+                  <option value="Konghucu">Konghucu</option>
+                  <option value="Lainnya">Lainnya</option>
+                </select>
+              </div>
+              <div class="form-group mt-4">
+                <label for="name">Benda Yang Hilang</label>
+                <input type="text" class="form-control" name="benda_hilang" id="benda_hilang" required>
+              </div>
+              <div class="form-group mt-4">
+                <label for="name">Upload KTP</label>
+                <input type="file" class="form-control" name="fileKtp" id="fileKtp" required>
+                <i class="" style="color: red;">file jpg, jpeg max 1MB</i>
+              </div>
+              <div class="form-group mt-4">
+                <label for="name">Alamat</label>
+                <textarea class="form-control" name="alamat" id="alamat" rows="3" required></textarea>
+              </div>
+              <div class="form-group mt-4">
+                <label for="name">Alasan Pengajuan</label>
+                <textarea class="form-control" name="alasan_pengajuan" id="alasan_pengajuan" rows="3"
+                  required></textarea>
+              </div>
+              <div class="mt-4"><button style="background: #47b2e4;
               border: #47b2e4;" class="btn btn-primary" onclick="kirimPengajuan()">Kirim Pengajuan</button></div>
+            </div>
           </div>
-        </div>
 
-      </div>
+        </div>
     </section><!-- End Portfolio Details Section -->
 
   </main><!-- End #main -->
@@ -243,6 +244,8 @@
     let nik = document.getElementById("nik").value
     let pekerjaan = document.getElementById("pekerjaan").value
     let tgl_lahir = document.getElementById("tgl_lahir").value
+    let agama = document.getElementById("agama").value
+    let alamat = document.getElementById("alamat").value
     let benda_hilang = document.getElementById("benda_hilang").value
     let fileKtp = document.getElementById("fileKtp")
     let alasan_pengajuan = document.getElementById("alasan_pengajuan").value
@@ -254,6 +257,8 @@
     formData.append("pekerjaan", pekerjaan);
     formData.append("tanggal_lahir", tgl_lahir);
     formData.append("benda_hilang", benda_hilang);
+    formData.append("agama", agama);
+    formData.append("alamat", alamat);
     formData.append("alasan", alasan_pengajuan);
     formData.append("jenis_pengajuan", jenis_pengajuan);
     formData.append("ktp", fileKtp.files[0]);

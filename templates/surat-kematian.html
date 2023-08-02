@@ -5,7 +5,7 @@
   <meta charset="utf-8" />
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 
-  <title>Pengajuan Permohonan KTP</title>
+  <title>Pengajuan Surat Kematian</title>
   <meta content="" name="description" />
   <meta content="" name="keywords" />
 
@@ -44,9 +44,9 @@
   <!-- ======= Header ======= -->
   <header id="header" class="header fixed-top d-flex align-items-center">
     <div class="d-flex align-items-center justify-content-between">
-      <a href="admin-dashboard.html" class="logo d-flex align-items-center">
+      <a href="dashboard" class="logo d-flex align-items-center">
         <img src="admin/img/logo.png" alt="" />
-        <span class="d-none d-lg-block">Admin Sragen</span>
+        <span class="d-none d-lg-block">Desa Bendo</span>
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div>
@@ -56,20 +56,22 @@
 
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
-        
+
 
         <li class="nav-item dropdown pe-3">
+
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <img src="admin/img/profile-img.jpg" alt="Profile" class="rounded-circle" />
-            <span class="d-none d-md-block dropdown-toggle ps-2">K. Anderson</span> </a><!-- End Profile Iamge Icon -->
+            <img src="img/profile-img.jpg" alt="Profile" class="rounded-circle">
+            <span class="d-none d-md-block dropdown-toggle ps-2" id="main-profile"></span>
+          </a><!-- End Profile Iamge Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
-              <h6>Kevin Anderson</h6>
-              <span>Web Designer</span>
+              <h6 id="profile-username"></h6>
+              <span id="profile-role"></span>
             </li>
             <li>
-              <hr class="dropdown-divider" />
+              <hr class="dropdown-divider">
             </li>
 
             <li>
@@ -79,39 +81,18 @@
               </a>
             </li>
             <li>
-              <hr class="dropdown-divider" />
+              <hr class="dropdown-divider">
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
-                <i class="bi bi-gear"></i>
-                <span>Account Settings</span>
-              </a>
-            </li>
-            <li>
-              <hr class="dropdown-divider" />
-            </li>
-
-            <li>
-              <a class="dropdown-item d-flex align-items-center" href="pages-faq.html">
-                <i class="bi bi-question-circle"></i>
-                <span>Need Help?</span>
-              </a>
-            </li>
-            <li>
-              <hr class="dropdown-divider" />
-            </li>
-
-            <li>
-              <a class="dropdown-item d-flex align-items-center" href="index.html">
+              <a class="dropdown-item d-flex align-items-center" href="#" onclick="LogOut('{{.url}}login')">
                 <i class="bi bi-box-arrow-right"></i>
                 <span>Sign Out</span>
               </a>
             </li>
-          </ul>
-          <!-- End Profile Dropdown Items -->
-        </li>
-        <!-- End Profile Nav -->
+
+          </ul><!-- End Profile Dropdown Items -->
+        </li><!-- End Profile Nav -->
       </ul>
     </nav>
     <!-- End Icons Navigation -->
@@ -122,7 +103,7 @@
   <aside id="sidebar" class="sidebar">
     <ul class="sidebar-nav" id="sidebar-nav">
       <li class="nav-item">
-        <a class="nav-link collapsed" href="admin-dashboard.html">
+        <a class="nav-link collapsed" href="dashboard">
           <i class="bi bi-grid"></i>
           <span>Dashboard</span>
         </a>
@@ -132,44 +113,59 @@
         <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-journal-text"></i><span>Pengajuan</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
-        <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+        <ul id="forms-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
           <li>
-            <a href="surat-domisili.html">
+            <a href="surat-domisili">
               <i class="bi bi-circle"></i><span>Surat Domisili</span>
             </a>
           </li>
           <li>
-            <a href="permohonan-kk.html">
-              <i class="bi bi-circle"></i><span>Surat Permohonan KK</span>
+            <a href="surat-kartu-keluarga">
+              <i class="bi bi-circle"></i><span>Surat Kartu Keluarga</span>
             </a>
           </li>
           <li>
-            <a href="permohonan-sku.html">
+            <a href="surat-keterangan-usaha">
               <i class="bi bi-circle"></i><span>Surat Keterangan Usaha</span>
             </a>
           </li>
           <li>
-            <a href="forms-validation.html">
+            <a href="surat-kelahiran">
               <i class="bi bi-circle"></i><span>Surat Kelahiran</span>
             </a>
           </li>
           <li>
-            <a href="forms-validation.html">
-              <i class="bi bi-circle"></i><span>Surat Kematian</span>    
+            <a href="#" class="active">
+              <i class="bi bi-circle"></i><span>Surat Kematian</span>
             </a>
-           </li>
+          </li>
           <li>
-            <a href="forms-validation.html">
+            <a href="surat-kehilangan">
               <i class="bi bi-circle"></i><span>Surat Kehilangan</span>
             </a>
-           </li>
-           <li>
-            <a href="forms-validation.html">
+          </li>
+          <li>
+            <a href="surat-permohonan-ktp">
               <i class="bi bi-circle"></i><span>Surat Permohonan KTP</span>
-             </a> 
-           </li>       
+            </a>
+          </li>
         </ul>
-      </li><!-- End Forms Nav -->
+      </li>
+      <!-- End Forms Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="daftar-admin">
+          <i class="bi bi-gear"></i>
+          <span>Daftar Admin</span>
+        </a>
+      </li><!-- End Dashboard Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="daftar-admin">
+          <i class="bi bi-people"></i>
+          <span>Daftar User</span>
+        </a>
+      </li><!-- End Dashboard Nav -->
     </ul>
   </aside>
   <!-- End Sidebar-->
@@ -179,7 +175,7 @@
       <h1>Pengajuan</h1>
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="admin-dashboard.html">Home</a></li>
+          <li class="breadcrumb-item"><a href="dashboard">Home</a></li>
           <li class="breadcrumb-item">Pengajuan</li>
         </ol>
       </nav>
@@ -198,252 +194,34 @@
                 <thead>
                   <tr>
                     <th scope="col">Nama</th>
-                    <th scope="col">Pekerjaan</th>
+                    <th scope="col">Jenis Kelamin</th>
                     <th scope="col">Umur</th>
+                    <th scope="col">Tempat Meninggal</th>
+                    <th scope="col">Tanggal Meninggal</th>
+                    <th scope="col">Hari Meninggal</th>
+                    <th scope="col">Penyebab Meninggal</th>
                     <th scope="col">Tanggal Pengajuan</th>
                     <th scope="col">Aksi</th>
                   </tr>
                 </thead>
-                <!-- <tbody>
+                <tbody>
                   {{if .items}} {{range .items}}
                   <tr>
-                    <td>{{.Name}}</td>
-                    <td>{{.Job}}</td>
-                    <td>{{.Age}}</td>
-                    <td>{{.CreatedAt}}</td>
+                    <td>{{.Nama}}</td>
+                    <td>{{.JenisKelamin}}</td>
+                    <td>{{.Umur}}</td>
+                    <td>{{.TempatLahir}}</td>
+                    <td>{{.TanggalLahir.Format "2 Jan, 2006"}}</td>
+                    <td>{{.HariMeninggal}}</td>
+                    <td>{{.Alasan}}</td>
+                    <td>{{.CreatedAt.Format "01-02-2006 15:04:05"}}</td>
                     <td>
-                      <a href="/surat-domisili?id={{.Id}}" class="btn btn-primary btn-small">Detail</a>
+                      <a href="/surat-kematian?id={{.IdPengajuan}}" class="btn btn-primary btn-small">Detail</a>
                     </td>
                   </tr>
                   {{end}} {{end}}
-                </tbody> -->
-                <tbody>
-                  <tr>
-                    <td>Brandon Jacob</td>
-                    <td>Designer</td>
-                    <td>28</td>
-                    <td>2016-05-25</td>
-                    <td>
-                      <a href="detail-pengajuan.html" class="btn btn-info btn-sm">Detail</a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Bridie Kessler</td>
-                    <td>Developer</td>
-                    <td>35</td>
-                    <td>2014-12-05</td>
-                    <td>
-                      <a href="detail-pengajuan.html" class="btn btn-info btn-sm">Detail</a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Ashleigh Langosh</td>
-                    <td>Finance</td>
-                    <td>45</td>
-                    <td>2011-08-12</td>
-                    <td>
-                      <a href="detail-pengajuan.html" class="btn btn-info btn-sm">Detail</a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Angus Grady</td>
-                    <td>HR</td>
-                    <td>34</td>
-                    <td>2012-06-11</td>
-                    <td>
-                      <a href="detail-pengajuan.html" class="btn btn-info btn-sm">Detail</a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Raheem Lehner</td>
-                    <td>Dynamic Division Officer</td>
-                    <td>47</td>
-                    <td>2011-04-19</td>
-                    <td>
-                      <a href="detail-pengajuan.html" class="btn btn-info btn-sm">Detail</a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Brandon Jacob</td>
-                    <td>Designer</td>
-                    <td>28</td>
-                    <td>2016-05-25</td>
-                    <td>
-                      <a href="detail-pengajuan.html" class="btn btn-info btn-sm">Detail</a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Bridie Kessler</td>
-                    <td>Developer</td>
-                    <td>35</td>
-                    <td>2014-12-05</td>
-                    <td>
-                      <a href="detail-pengajuan.html" class="btn btn-info btn-sm">Detail</a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Ashleigh Langosh</td>
-                    <td>Finance</td>
-                    <td>45</td>
-                    <td>2011-08-12</td>
-                    <td>
-                      <a href="detail-pengajuan.html" class="btn btn-info btn-sm">Detail</a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Angus Grady</td>
-                    <td>HR</td>
-                    <td>34</td>
-                    <td>2012-06-11</td>
-                    <td>
-                      <a href="detail-pengajuan.html" class="btn btn-info btn-sm">Detail</a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Raheem Lehner</td>
-                    <td>Dynamic Division Officer</td>
-                    <td>47</td>
-                    <td>2011-04-19</td>
-                    <td>
-                      <a href="detail-pengajuan.html" class="btn btn-info btn-sm">Detail</a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Brandon Jacob</td>
-                    <td>Designer</td>
-                    <td>28</td>
-                    <td>2016-05-25</td>
-                    <td>
-                      <a href="detail-pengajuan.html" class="btn btn-info btn-sm">Detail</a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Bridie Kessler</td>
-                    <td>Developer</td>
-                    <td>35</td>
-                    <td>2014-12-05</td>
-                    <td>
-                      <a href="detail-pengajuan.html" class="btn btn-info btn-sm">Detail</a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Ashleigh Langosh</td>
-                    <td>Finance</td>
-                    <td>45</td>
-                    <td>2011-08-12</td>
-                    <td>
-                      <a href="detail-pengajuan.html" class="btn btn-info btn-sm">Detail</a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Angus Grady</td>
-                    <td>HR</td>
-                    <td>34</td>
-                    <td>2012-06-11</td>
-                    <td>
-                      <a href="detail-pengajuan.html" class="btn btn-info btn-sm">Detail</a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Raheem Lehner</td>
-                    <td>Dynamic Division Officer</td>
-                    <td>47</td>
-                    <td>2011-04-19</td>
-                    <td>
-                      <a href="detail-pengajuan.html" class="btn btn-info btn-sm">Detail</a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Brandon Jacob</td>
-                    <td>Designer</td>
-                    <td>28</td>
-                    <td>2016-05-25</td>
-                    <td>
-                      <a href="detail-pengajuan.html" class="btn btn-info btn-sm">Detail</a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Bridie Kessler</td>
-                    <td>Developer</td>
-                    <td>35</td>
-                    <td>2014-12-05</td>
-                    <td>
-                      <a href="detail-pengajuan.html" class="btn btn-info btn-sm">Detail</a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Ashleigh Langosh</td>
-                    <td>Finance</td>
-                    <td>45</td>
-                    <td>2011-08-12</td>
-                    <td>
-                      <a href="detail-pengajuan.html" class="btn btn-info btn-sm">Detail</a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Angus Grady</td>
-                    <td>HR</td>
-                    <td>34</td>
-                    <td>2012-06-11</td>
-                    <td>
-                      <a href="detail-pengajuan.html" class="btn btn-info btn-sm">Detail</a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Raheem Lehner</td>
-                    <td>Dynamic Division Officer</td>
-                    <td>47</td>
-                    <td>2011-04-19</td>
-                    <td>
-                      <a href="detail-pengajuan.html" class="btn btn-info btn-sm">Detail</a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Brandon Jacob</td>
-                    <td>Designer</td>
-                    <td>28</td>
-                    <td>2016-05-25</td>
-                    <td>
-                      <a href="detail-pengajuan.html" class="btn btn-info btn-sm">Detail</a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Bridie Kessler</td>
-                    <td>Developer</td>
-                    <td>35</td>
-                    <td>2014-12-05</td>
-                    <td>
-                      <a href="detail-pengajuan.html" class="btn btn-info btn-sm">Detail</a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Ashleigh Langosh</td>
-                    <td>Finance</td>
-                    <td>45</td>
-                    <td>2011-08-12</td>
-                    <td>
-                      <a href="detail-pengajuan.html" class="btn btn-info btn-sm">Detail</a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Angus Grady</td>
-                    <td>HR</td>
-                    <td>34</td>
-                    <td>2012-06-11</td>
-                    <td>
-                      <a href="detail-pengajuan.html" class="btn btn-info btn-sm">Detail</a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Raheem Lehner</td>
-                    <td>Dynamic Division Officer</td>
-                    <td>47</td>
-                    <td>2011-04-19</td>
-                    <td>
-                      <a href="detail-pengajuan.html" class="btn btn-info btn-sm">Detail</a>
-                    </td>
-                  </tr>
                 </tbody>
+
               </table>
               <!-- End Table with stripped rows -->
             </div>
@@ -484,6 +262,19 @@
 
   <!-- Template Main JS File -->
   <script src="admin/js/main.js"></script>
+
+  <script>
+    const url = '{{.url}}'
+    validateToken(url).then((isValid) => {
+      if (!isValid) {
+        RedirectLogin(url + "login")
+      } else {
+
+        profile = document.getElementById("profileDrowpdown")
+        profile.textContent += GetUsername()
+      }
+    })
+  </script>
 </body>
 
 </html>

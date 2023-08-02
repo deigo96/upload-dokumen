@@ -68,7 +68,7 @@ func Setup(env *bootrstrap.Env, db bootrstrap.Databases, router *gin.RouterGroup
 	publicRoute.GET("/surat-kartu-keluarga", cx.SuratKartuKeluarga)
 	publicRoute.GET("/surat-keterangan-usaha", cx.SuratKeteranganUsaha)
 	publicRoute.GET("/surat-kelahiran", cx.SuratKelahiran)
-	publicRoute.GET("/surat-kematian", cx.SuratDomisili)
-	publicRoute.GET("/surat-kehilangan", cx.SuratDomisili)
-	publicRoute.GET("/surat-permohonan-ktp", cx.SuratDomisili)
+	publicRoute.GET("/surat-kematian", cx.SuratKematian)
+	publicRoute.GET("/surat-kehilangan", cx.SuratKehilangan)
+	publicRoute.GET("/surat-permohonan-ktp", cx.SuratKtp)
 }
