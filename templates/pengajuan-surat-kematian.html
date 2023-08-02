@@ -45,18 +45,29 @@
   <header id="header" class="fixed-top header-inner-pages">
     <div class="container d-flex align-items-center">
 
-      <h1 class="logo me-auto"><a href="index.html">Desa Bendo</a></h1>
+      <h1 class="logo me-auto"><a href="{{.url}}">DESA BENDO</a></h1>
       <!-- Uncomment below if you prefer to use an image logo -->
       <!-- <a href="index.html" class="logo me-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
       <nav id="navbar" class="navbar">
         <ul>
-          <li><a class="nav-link scrollto " href="index.html">Home</a></li>
-          <li><a class="nav-link scrollto" href="index.html#about">Tentang</a></li>
-          <li><a class="nav-link scrollto" href="index.html#services">Layanan</a></li>
-          <li><a class="nav-link scrollto" href="index.html#team">Perangkat</a></li>
-          <li><a class="nav-link scrollto" href="index.html#contact">Kontak</a></li>
-          <li><a class="getstarted scrollto" href="login.html">Login</a></li>
+          <li><a class="nav-link scrollto" href="{{.url}}#hero">Home</a></li>
+          <li><a class="nav-link scrollto" href="{{.url}}#services">Layanan</a></li>
+          <li><a class="nav-link scrollto" href="{{.url}}#about">Tentang</a></li>
+          <li><a class="nav-link scrollto" href="{{.url}}#team">Perangkat</a></li>
+          <li><a class="nav-link scrollto" href="{{.url}}#contact">Kontak</a></li>
+          <li class="dropdown"><a href="#"><span id="profileDrowpdown"></span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+
+              <!-- <li><a href="#">Drop Down 3</a></li> -->
+              <li>
+                <a class="dropdown-item d-flex align-items-center" href="#" onclick="LogOut('{{.url}}login')">
+                  <span>Sign Out</span>
+                  <i class="bi bi-box-arrow-right"></i>
+                </a>
+              </li>
+            </ul>
+          </li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
@@ -71,7 +82,7 @@
       <div class="container">
 
         <ol>
-          <li><a href="index.html">Home</a></li>
+          <li><a href="{{.url}}">Home</a></li>
           <li>Pengajuan</li>
         </ol>
         <h2>Pengajuan Surat Kematian</h2>
@@ -92,43 +103,45 @@
               </div>
               <div class="form-group mt-4">
                 <label for="name">Jenis Kelamin</label>
-                <select name="agama" id="agama" class="form-control">
+                <select name="jenis_kelamin" id="jenis_kelamin" class="form-control">
                   <option selected>Pilih ---</option>
                   <option value="Laki-Laki">Laki-Laki</option>
                   <option value="Perempuan">Perempuan</option>
                 </select>
               </div>
-            <div class="form-group mt-4">
-              <label for="name">Umur</label>
-              <input type="text" class="form-control" name="nik" id="nik" required>
-            </div>
-            <div class="form-group mt-4">
-              <label for="name">Hari Meninggal Dunia</label>
-              <input type="text" class="form-control" name="pekerjaan" id="pekerjaan" required>
-            </div>
-            <div class="form-group mt-4">
-              <label for="name">Tanggal Meninggal Dunia</label>
-              <input type="date" class="form-control" name="tgl_lahir" id="tgl_lahir" required>
-            </div>
-            <div class="form-group mt-4">
-              <label for="name">Upload KTP yang meninggal</label>
-              <input type="file" class="form-control" name="fileKtp" id="fileKtp" required>
-              <i class="" style="color: red;">file jpg, jpeg max 1MB</i>
-            </div>
-            <div class="form-group mt-4">
-              <label for="name">Tempat Meninggal Dunia</label>
-              <textarea class="form-control" name="alamat" id="alamat" rows="1" required></textarea>
-            </div>
-            <div class="form-group mt-4">
-              <label for="name">Penyebab Meninggal Dunia</label>
-              <textarea class="form-control" name="alasan_pengajuan" id="alasan_pengajuan" rows="3" required></textarea>
-            </div>
-            <div class="mt-4"><button style="background: #47b2e4;
+              <div class="form-group mt-4">
+                <label for="name">Umur</label>
+                <input type="text" class="form-control" name="umur" id="umur" required>
+              </div>
+              <div class="form-group mt-4">
+                <label for="name">Hari Meninggal Dunia</label>
+                <input type="text" class="form-control" name="hari_meninggal" id="hari_meninggal" required>
+              </div>
+              <div class="form-group mt-4">
+                <label for="name">Tanggal Meninggal Dunia</label>
+                <input type="date" class="form-control" name="tanggal_meninggal" id="tanggal_meninggal" required>
+              </div>
+              <div class="form-group mt-4">
+                <label for="name">Upload KTP yang meninggal</label>
+                <input type="file" class="form-control" name="fileKtp" id="fileKtp" required>
+                <i class="" style="color: red;">file jpg, jpeg max 1MB</i>
+              </div>
+              <div class="form-group mt-4">
+                <label for="name">Tempat Meninggal Dunia</label>
+                <textarea class="form-control" name="tempat_meninggal" id="tempat_meninggal" rows="1"
+                  required></textarea>
+              </div>
+              <div class="form-group mt-4">
+                <label for="name">Penyebab Meninggal Dunia</label>
+                <textarea class="form-control" name="alasaan_meninggal" id="alasaan_meninggal" rows="3"
+                  required></textarea>
+              </div>
+              <div class="mt-4"><button style="background: #47b2e4;
               border: #47b2e4;" class="btn btn-primary" onclick="kirimPengajuan()">Kirim Pengajuan</button></div>
+            </div>
           </div>
-        </div>
 
-      </div>
+        </div>
     </section><!-- End Portfolio Details Section -->
 
   </main><!-- End #main -->
@@ -141,41 +154,28 @@
           <hr>
 
           <div class="col-lg-3 col-md-6 footer-contact">
-            <h3>Sragen</h3>
+            <h3>DESA BENDO</h3>
             <p>
-              A108 Adam Street <br>
-              New York, NY 535022<br>
-              United States <br><br>
-              <strong>Phone:</strong> +1 5589 55488 55<br>
-              <strong>Email:</strong> info@example.com<br>
+              JXP9+M2G, Nginggil, Bendo <br>
+              Kec. Sukodono, Kabupaten Sragen, Jawa Tengah 57263<br>
+              Indonesia <br><br>
+              <strong>Phone:</strong>
+            <p> +62 813 2940 4845<br>
+              +62 812 1571 085<br></p>
+            <strong>Email:</strong>
+            <p>desabendo1703@gmail.com<br>
             </p>
           </div>
 
           <div class="col-lg-3 col-md-6 footer-links">
-            <!-- <h4>Useful Links</h4>
-            <ul>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Home</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">About us</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Services</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Terms of service</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Privacy policy</a></li>
-            </ul> -->
           </div>
 
           <div class="col-lg-3 col-md-6 footer-links">
-            <!-- <h4>Our Services</h4>
-            <ul>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Web Design</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Web Development</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Product Management</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Marketing</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Graphic Design</a></li>
-            </ul> -->
           </div>
 
           <div class="col-lg-3 col-md-6 footer-links">
-            <h4>Our Social Networks</h4>
-            <p>Cras fermentum odio eu feugiat lide par naso tierra videa magna derita valies</p>
+            <h4>Hubungi Kami</h4>
+            <p>Jika membutuhkan informasi seputar Desa Bendo kunjungi akun sosial media kami</p>
             <div class="social-links mt-3">
               <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
               <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
@@ -194,11 +194,6 @@
         &copy; Copyright <strong><span>Arsha</span></strong>. All Rights Reserved
       </div>
       <div class="credits">
-        <!-- All the links in the footer should remain intact. -->
-        <!-- You can delete the links only if you purchased the pro version. -->
-        <!-- Licensing information: https://bootstrapmade.com/license/ -->
-        <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/arsha-free-bootstrap-html-template-corporate/ -->
-        <!-- Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> -->
       </div>
     </div>
   </footer><!-- End Footer -->
@@ -225,15 +220,38 @@
 </html>
 
 <script>
+  const url = '{{.url}}'
+  validateToken(url).then((isValid) => {
+    if (!isValid) {
+      RedirectLogin(url + "login")
+    } else {
+
+      profile = document.getElementById("profileDrowpdown")
+      profile.textContent += GetUsername()
+    }
+  })
+
   function kirimPengajuan() {
     let nama = document.getElementById("nama").value
-    let nik = document.getElementById("nik").value
-    let pekerjaan = document.getElementById("pekerjaan").value
-    let agama = document.getElementById("agama").value
-    let nama_ibu = document.getElementById("nama_ibu").value
-    let tgl_lahir = document.getElementById("tgl_lahir").value
-    let alamat = document.getElementById("alamat").value
-    let alasan_pengajuan = document.getElementById("alasan_pengajuan").value
+    let jenis_kelamin = document.getElementById("jenis_kelamin").value
+    let umur = document.getElementById("umur").value
+    let tempat_meninggal = document.getElementById("tempat_meninggal").value
+    let tanggal_meninggal = document.getElementById("tanggal_meninggal").value
+    let hari_meninggal = document.getElementById("hari_meninggal").value
+    let fileKtp = document.getElementById("fileKtp")
+    let alasaan_meninggal = document.getElementById("alasaan_meninggal").value
+    let jenis_pengajuan = 5
+
+    const formData = new FormData();
+    formData.append("nama", nama);
+    formData.append("jenis_kelamin", jenis_kelamin);
+    formData.append("umur", umur);
+    formData.append("tempat_lahir", tempat_meninggal);
+    formData.append("tanggal_lahir", tanggal_meninggal);
+    formData.append("hari_meninggal", hari_meninggal);
+    formData.append("alasan", alasaan_meninggal);
+    formData.append("jenis_pengajuan", jenis_pengajuan);
+    formData.append("ktp", fileKtp.files[0]);
 
     Swal.fire({
       title: "Apakah anda yakin?",
@@ -245,7 +263,32 @@
       confirmButtonText: "Kirim pengajuan",
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire("Berhasil","Pengajuan dokumen berhasil dikirim", "success");
+        const requestOptions = {
+          method: "POST",             // HTTP method
+          headers: {                  // Request headers (optional, depends on your API requirements)
+            "Authorization": `Bearer ${GetToken()}`,
+            // Add any other headers if required by your API
+          },
+          body: formData,  // Convert the data to JSON format and include it in the request body
+        };
+
+        fetch(url + 'kirim-pengajuan', requestOptions)
+          .then((response) => {
+            if (!response.ok) {
+              console.log("error");
+            }
+            return response.json()
+          })
+          .then((data) => {
+            if (data.code != 201) {
+              throw new Error(data.message)
+            }
+            Swal.fire("Berhasil", "Pengajuan dokumen berhasil dikirim", "success");
+            setInterval(ReloadPage, 2000)
+          })
+          .catch((error) => {
+            Swal.fire("Gagal", error.message, "error");
+          })
       }
     });
 

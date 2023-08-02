@@ -46,6 +46,8 @@ type PengajuanParam struct {
 	NamaPengaju *string `json:"nama_pengaju"`
 	JenisKelaminAnak *string `json:"jenis_kelamin_anak"`
 	HubunganPengaju *string `json:"hubungan_pengaju"`
+	HariMeninggal *string `json:"hari_meninggal"`
+	BendaHilang *string `json:"benda_hilang"`
 }
 
 type Aksi struct {

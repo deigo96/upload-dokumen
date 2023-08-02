@@ -54,4 +54,6 @@ type Documents struct {
 	NamaPengajuan string `json:"nama_pengajuan"`
 	AlasanPenolakan string `json:"alasan_penolakan"`
 	Dokumen string `json:"dokumen"`
+	HariMeninggal *string `json:"hari_meninggal"`
+	BendaHilang *string `json:"benda_hilang"`
 }

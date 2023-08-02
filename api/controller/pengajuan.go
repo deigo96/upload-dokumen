@@ -3,6 +3,7 @@ package controller
 import (
 	"desa-sragen/domain"
 	"fmt"
+	"log"
 	"net/http"
 	"path/filepath"
 	"strings"
@@ -107,6 +108,8 @@ func (cx *Controller) KirimPengajuan(c *gin.Context) {
 	nama_pengaju := c.PostForm("nama_pengaju")
 	jenis_kelamin_anak := c.PostForm("jenis_kelamin_anak")
 	hubungan_pengaju := c.PostForm("hubungan_pengaju")
+	hari_meninggal := c.PostForm("hari_meninggal")
+	benda_hilang := c.PostForm("benda_hilang")
 
 	var extFoto string
 	var extKtp string
@@ -152,7 +155,7 @@ func (cx *Controller) KirimPengajuan(c *gin.Context) {
 		}
 	}
 
-	if jenis_pengajuan == "2" || jenis_pengajuan == "6" {
+	if jenis_pengajuan == "2" || jenis_pengajuan == "6" || jenis_pengajuan == "5" || jenis_pengajuan == "7" {
 		fileKtp, err := c.FormFile("ktp")
 		if err != nil {
 			c.JSON(http.StatusBadGateway, domain.JsonResponse(http.StatusBadGateway, "Gagal upload file", domain.Empty{}))
@@ -180,8 +183,9 @@ func (cx *Controller) KirimPengajuan(c *gin.Context) {
 		}
 	}
 
-	if jenis_pengajuan == "3" {
+	if jenis_pengajuan == "3" || jenis_pengajuan == "4" {
 		fileFoto, err := c.FormFile("fileTtd")
+		log.Println(err)
 		if err != nil {
 			c.JSON(http.StatusBadGateway, domain.JsonResponse(http.StatusBadGateway, "Gagal upload file", domain.Empty{}))
 			return
@@ -232,6 +236,8 @@ func (cx *Controller) KirimPengajuan(c *gin.Context) {
 		JenisKelaminAnak: handleEmpty(jenis_kelamin_anak),
 		HubunganPengaju:  handleEmpty(hubungan_pengaju),
 		Status:           0,
+		HariMeninggal: handleEmpty(hari_meninggal),
+		BendaHilang: handleEmpty(benda_hilang),
 	}
 
 	jsonData.CreatedAt = domain.TimeNow()
