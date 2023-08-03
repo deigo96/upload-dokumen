@@ -26,12 +26,19 @@ func Setup(env *bootrstrap.Env, db bootrstrap.Databases, router *gin.RouterGroup
 		middleware.ValidateToken(env.SecretKey),
 	)
 
+	adminRoute := router.Group("").Use(
+		middleware.ValidateJwt(env.SecretKey),
+		middleware.ValidateAdmin(),
+	)
+
 	superRoute := router.Group("").Use(
 		middleware.ValidateJwt(env.SecretKey),
 		middleware.ValidateSuper(),
 	)
 
 	protectedRoute.GET("validate-token", cx.ValidateToken)
+	adminRoute.GET("validate-token-admin", cx.ValidateTokenAdmin)
+	superRoute.GET("validate-token-super", cx.ValidateTokenSuper)
 	publicRoute.GET("/", cx.Dashboard)
 	publicRoute.GET("/login", cx.Login)
 	publicRoute.GET("/register", cx.Register)
@@ -42,6 +49,7 @@ func Setup(env *bootrstrap.Env, db bootrstrap.Databases, router *gin.RouterGroup
 	publicRoute.GET("/dashboard", cx.AdminDashboard)
 	publicRoute.GET("/daftar-admin", cx.PageAdmin)
 	publicRoute.GET("/daftar-user", cx.ListUsers)
+	publicRoute.GET("/ganti-password", cx.PagePassword)
 	publicRoute.GET("/detail-pengajuan/:id", cx.DetailPengajuan)
 	protectedRoute.GET("redirect/:type", cx.RedirectUrl)
 

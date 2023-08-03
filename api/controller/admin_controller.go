@@ -21,8 +21,21 @@ func (cx *Controller) PageAdmin(c *gin.Context)  {
 }
 
 func (cx *Controller) ListUsers(c *gin.Context)  {
-	c.HTML(200, "daftar-admin.html", gin.H{
+	users, err := cx.Repo.GetAllUsers()
+	if err != nil {
+		c.HTML(500, "500.html", gin.H{})
+		return
+	}
+
+	c.HTML(200, "daftar-user.html", gin.H{
 		"url": cx.Config.ServerUrl,
+		"items": users,
+	})
+}
+
+func (cx *Controller) PagePassword(c *gin.Context)  {
+	c.HTML(200, "ganti-password.html", gin.H{
+		"url": cx.Env(),
 	})
 }
 

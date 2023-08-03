@@ -37,7 +37,29 @@ function GetRole() {
 
 async function validateToken(url) {
   try {
-    const response = await fetch(url + 'validate-token', {
+    const response = await fetch(url + 'validate-token-admin', {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${GetToken()}`,
+      },
+    });
+
+    if (!response.ok) {
+      console.log(response);
+      return false;
+    } else {
+      return true;
+    }
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
+}
+
+async function validateTokenSuper(url) {
+  try {
+    const response = await fetch(url + 'validate-token-super', {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

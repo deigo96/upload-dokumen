@@ -51,7 +51,6 @@
                 <li class="nav-item dropdown pe-3">
 
                     <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-                        <img src="img/profile-img.jpg" alt="Profile" class="rounded-circle">
                         <span class="d-none d-md-block dropdown-toggle ps-2" id="main-profile"></span>
                     </a><!-- End Profile Iamge Icon -->
 
@@ -143,15 +142,15 @@
                 </ul>
             </li>
             <!-- End Forms Nav -->
-            <li class="nav-item">
+            <li class="nav-item" id="daftarAdmin" style="display: none;">
                 <a class="nav-link collapsed" href="daftar-admin">
-                    <i class="bi bi-gear"></i>
-                    <span>Daftar Admin</span>
+                  <i class="bi bi-gear"></i>
+                  <span>Daftar Admin</span>
                 </a>
-            </li><!-- End Dashboard Nav -->
+              </li><!-- End Dashboard Nav -->
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="daftar-admin">
+                <a class="nav-link collapsed" href="daftar-user">
                     <i class="bi bi-people"></i>
                     <span>Daftar User</span>
                 </a>
@@ -328,6 +327,15 @@
         if (!isValid) {
             RedirectLogin(url + "login")
         }
+    })
+
+    validateTokenSuper(url).then((isValid) => {
+      daftarAmdin = document.getElementById("daftarAdmin")
+      if (!isValid) {
+        daftarAmdin.style.display = "none"
+      } else {
+        daftarAmdin.style.display = "block"
+      }
     })
 
     async function prosesPengajuan(action, id) {

@@ -2,7 +2,6 @@ package controller
 
 import (
 	"desa-sragen/domain"
-	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -64,8 +63,6 @@ func (cx *Controller) SuccessLogin(c *gin.Context)  {
 	// Redirect to a new URL
 	newURL := cx.Env()+"dashboard"
 	newToken := "Bearer "+ token
-	fmt.Println(newToken)
-	fmt.Println("newToken")
 
 	targetReq, err := http.NewRequest(http.MethodGet, newURL, nil)
     if err != nil {

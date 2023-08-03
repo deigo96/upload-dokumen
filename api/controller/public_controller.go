@@ -27,3 +27,11 @@ func (cx *Controller) Dashboard(c *gin.Context) {
 func (cx *Controller) ValidateToken(c *gin.Context)  {
 	c.JSON(200, domain.JsonResponse(200, "Validated", domain.Empty{}))
 }
+
+func (cx *Controller) ValidateTokenAdmin(c *gin.Context)  {
+	c.JSON(200, domain.JsonResponse(200, "Validated", domain.Empty{}))
+}
+
+func (cx *Controller) ValidateTokenSuper(c *gin.Context)  {
+	c.JSON(200, domain.JsonResponse(200, "Validated", domain.Empty{}))
+}

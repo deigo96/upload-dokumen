@@ -51,7 +51,6 @@
                 <li class="nav-item dropdown pe-3">
 
                     <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-                        <img src="img/profile-img.jpg" alt="Profile" class="rounded-circle">
                         <span class="d-none d-md-block dropdown-toggle ps-2" id="main-profile"></span>
                     </a><!-- End Profile Iamge Icon -->
 
@@ -143,7 +142,7 @@
                 </ul>
             </li>
             <!-- End Forms Nav -->
-            <li class="nav-item">
+            <li class="nav-item" id="daftarAdmin" style="display: none;">
                 <a class="nav-link collapsed" href="daftar-admin">
                     <i class="bi bi-gear"></i>
                     <span>Daftar Admin</span>
@@ -151,7 +150,7 @@
             </li><!-- End Dashboard Nav -->
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="daftar-admin">
+                <a class="nav-link collapsed" href="daftar-user">
                     <i class="bi bi-people"></i>
                     <span>Daftar User</span>
                 </a>
@@ -204,8 +203,8 @@
                                 </div>
                                 <div class="col-12">
                                     <label for="inputEmail4" class="form-label">Agama</label>
-                                    <input type="text" class="form-control" value="{{.items.Agama}}"
-                                        id="inputEmail4" readonly />
+                                    <input type="text" class="form-control" value="{{.items.Agama}}" id="inputEmail4"
+                                        readonly />
                                 </div>
                                 <div class="col-12">
                                     <label for="inputEmail4" class="form-label">Benda Hilang</label>
@@ -332,6 +331,15 @@
     validateToken(url).then((isValid) => {
         if (!isValid) {
             RedirectLogin(url + "login")
+        }
+    })
+
+    validateTokenSuper(url).then((isValid) => {
+        daftarAmdin = document.getElementById("daftarAdmin")
+        if (!isValid) {
+            daftarAmdin.style.display = "none"
+        } else {
+            daftarAmdin.style.display = "block"
         }
     })
 

@@ -34,7 +34,6 @@ func ValidateJwt(secret string) gin.HandlerFunc {
 			c.Abort()
 			return
 				}
-				fmt.Println(claimedToken.Role)
 				c.Set("username", claimedToken.Username)
 				c.Set("role", claimedToken.Role)
 				c.Set("userId", claimedToken.UserId)
@@ -59,6 +58,22 @@ func ValidateSuper() gin.HandlerFunc {
 			ctx.Next()
 			return
 		}
+
+		ctx.HTML(http.StatusUnauthorized, "login.html", gin.H{})
+		ctx.Abort()
+	}
+}
+
+func ValidateAdmin() gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		privilege := ctx.GetInt("role")
+		fmt.Println(privilege)
+		if privilege == 2 || privilege == 1 {
+			fmt.Println("success")
+			ctx.Next()
+			return
+		}
+		fmt.Println("failed")
 
 		ctx.HTML(http.StatusUnauthorized, "login.html", gin.H{})
 		ctx.Abort()

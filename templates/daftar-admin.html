@@ -48,7 +48,7 @@
     <div class="d-flex align-items-center justify-content-between">
       <a href="dashboard" class="logo d-flex align-items-center">
         <img src="img/logo.png" alt="">
-        <span class="d-none d-lg-block">Admin Sragen</span>
+        <span class="d-none d-lg-block">Desa Bendo</span>
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
@@ -73,7 +73,6 @@
         <li class="nav-item dropdown pe-3">
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <img src="img/profile-img.jpg" alt="Profile" class="rounded-circle">
             <span class="d-none d-md-block dropdown-toggle ps-2" id="main-profile"></span>
           </a><!-- End Profile Iamge Icon -->
 
@@ -84,13 +83,6 @@
             </li>
             <li>
               <hr class="dropdown-divider">
-            </li>
-
-            <li>
-              <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
-                <i class="bi bi-person"></i>
-                <span>My Profile</span>
-              </a>
             </li>
             <li>
               <hr class="dropdown-divider">
@@ -151,15 +143,15 @@
         </ul>
       </li><!-- End Forms Nav -->
 
-      <li class="nav-item">
-        <a class="nav-link " href="daftar-admin">
+      <li class="nav-item" id="daftarAdmin" style="display: none;">
+        <a class="nav-link collapsed" href="daftar-admin">
           <i class="bi bi-gear"></i>
           <span>Daftar Admin</span>
         </a>
       </li><!-- End Dashboard Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="daftar-admin">
+        <a class="nav-link collapsed" href="daftar-user">
           <i class="bi bi-people"></i>
           <span>Daftar User</span>
         </a>
@@ -265,7 +257,18 @@
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
   <script>
-    validateToken('{{.url}}')
+    const url = '{{.url}}'
+    validateTokenSuper(url).then((isValid) => {
+      daftarAmdin = document.getElementById("daftarAdmin")
+      if (!isValid) {
+        daftarAmdin.style.display = "none"
+        RedirectLogin(url + "login")
+      } else {
+        daftarAmdin.style.display = "block"
+        profile = document.getElementById("profileDrowpdown")
+        profile.textContent += GetUsername()
+      }
+    })
 
 
     function createButton() {
@@ -313,7 +316,14 @@
 
         // Column 5 - Status
         const column5 = document.createElement("td");
-        column5.textContent = item.is_active;
+        const span5 = document.createElement("span")
+        if (item.is_active == "Aktif") {
+          span5.setAttribute("class", "badge bg-success")
+        } else {
+          span5.setAttribute("class", "badge bg-danger")
+        }
+        span5.textContent = item.is_active;
+        column5.appendChild(span5)
         row.appendChild(column5);
 
         // Column 6 - Created At
@@ -437,7 +447,6 @@
       });
     }
 
-    let url = '{{.url}}'
     SetProfile()
 
     async function tambahAdmin() {
@@ -445,7 +454,9 @@
         title: 'Tambah Admin',
         html:
           '<input id="swal-input1" class="swal2-input" placeholder="username">' +
-          '<input id="swal-input2" class="swal2-input" placeholder="email">',
+          '<input id="swal-input2" class="swal2-input" placeholder="email">' +
+          '<br><i class="text-center">Password default adalah 123456</i>' ,
+
         focusConfirm: false,
         preConfirm: () => {
           let username = document.getElementById('swal-input1').value

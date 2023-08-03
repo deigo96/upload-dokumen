@@ -2,7 +2,6 @@ package controller
 
 import (
 	"desa-sragen/domain"
-	"fmt"
 	"log"
 	"net/http"
 	"path/filepath"
@@ -178,7 +177,6 @@ func (cx *Controller) KirimPengajuan(c *gin.Context) {
 		// Save the uploaded file to a specific location (e.g., ./uploads)
 		destination := filepath.Join("./uploads/users", extKtp)
 		if err := c.SaveUploadedFile(fileKtp, destination); err != nil {
-			fmt.Println(err)
 			c.JSON(http.StatusInternalServerError, domain.JsonResponse(http.StatusInternalServerError, "Failed to save file", domain.Empty{}))
 			return
 		}

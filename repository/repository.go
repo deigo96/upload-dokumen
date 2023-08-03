@@ -92,3 +92,11 @@ func (r *repo) UpdateStatus(id int,req domain.Aksi) error {
 
 	return nil
 }
+
+func (r *repo) GetAllUsers() (record []domain.Auth, err error) {
+	if err := r.db.Table("auth").Where("role_id = 0").Scan(&record).Error; err != nil {
+		return nil, errors.New("internal server error")
+	}
+
+	return record, nil   
+}

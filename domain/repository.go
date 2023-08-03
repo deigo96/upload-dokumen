@@ -10,4 +10,5 @@ type Repo interface {
 	GetAllPengajuan(idPengajuan int32) ([]Documents, error)
 	GetPengajuanById(id int, idJenis int8) (*Documents, error)
 	UpdateStatus(id int, req Aksi) error
+	GetAllUsers() ([]Auth, error)
 }
