@@ -2,6 +2,7 @@ package domain
 
 type Repo interface {
 	GetUser(username string) (*Auth, error)
+	GetUserById(id int) (*Auth, error)
 	CreateUser(Auth) error
 	GetAllAdmin() ([]Auth, error)
 	InActiveAuth(id int, isActive bool) error
@@ -11,4 +12,5 @@ type Repo interface {
 	GetPengajuanById(id int, idJenis int8) (*Documents, error)
 	UpdateStatus(id int, req Aksi) error
 	GetAllUsers() ([]Auth, error)
+	UpdatePassword(id int, pass string) error
 }

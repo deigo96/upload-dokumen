@@ -58,3 +58,8 @@ type Aksi struct {
 	UpdatedAt       time.Time
 	UpdatedBy       int
 }
+
+type Password struct {
+	NewPassword string `json:"password"`
+	OldPassword string `json:"old_password"`
+}

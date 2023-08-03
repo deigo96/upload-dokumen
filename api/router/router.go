@@ -50,6 +50,7 @@ func Setup(env *bootrstrap.Env, db bootrstrap.Databases, router *gin.RouterGroup
 	publicRoute.GET("/daftar-admin", cx.PageAdmin)
 	publicRoute.GET("/daftar-user", cx.ListUsers)
 	publicRoute.GET("/ganti-password", cx.PagePassword)
+	adminRoute.POST("/change-admin-password", cx.ChangePassword)
 	publicRoute.GET("/detail-pengajuan/:id", cx.DetailPengajuan)
 	protectedRoute.GET("redirect/:type", cx.RedirectUrl)
 

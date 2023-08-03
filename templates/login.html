@@ -90,7 +90,8 @@
                     </div>
 
                     <div class="col-12">
-                      <button class="btn btn-primary w-100" type="button" onclick="login()">Masuk</button>
+                      <button class="btn btn-primary w-100" id="loginButton" type="button"
+                        onclick="login()">Masuk</button>
                     </div>
                     <div class="col-12">
                       <p class="small mb-0">Belum punya akun? <a href="register">Daftar akun</a></p>
@@ -131,11 +132,21 @@
 
 <script>
 
+
+  function handleKeyPress(event) {
+    if (event.key === "Enter") {
+      loginButton.click(); // Trigger the login button click
+    }
+  }
+
+  document.getElementById("yourUsername").addEventListener("keypress", handleKeyPress);
+  document.getElementById("yourPassword").addEventListener("keypress", handleKeyPress);
+
   function login() {
+    let url = '{{.url}}'
     let username = document.getElementById("yourUsername").value
     let password = document.getElementById("yourPassword").value
-    let url = '{{.url}}'
-
+    const loginButton = document.getElementById("loginButton");
     const invalidFeedbackUsername = document.getElementById("invalid-username");
     const invalidFeedbackPassword = document.getElementById("invalid-password");
 
@@ -181,7 +192,7 @@
               toast: true,
               position: 'top-end',
               showConfirmButton: false,
-              timer: 3000,
+              timer: 2000,
               timerProgressBar: true,
               didOpen: (toast) => {
                 toast.addEventListener('mouseenter', Swal.stopTimer)

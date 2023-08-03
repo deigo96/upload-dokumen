@@ -14,13 +14,13 @@ func (cx *Controller) AdminDashboard(c *gin.Context) {
 	})
 }
 
-func (cx *Controller) PageAdmin(c *gin.Context)  {
+func (cx *Controller) PageAdmin(c *gin.Context) {
 	c.HTML(200, "daftar-admin.html", gin.H{
 		"url": cx.Config.ServerUrl,
 	})
 }
 
-func (cx *Controller) ListUsers(c *gin.Context)  {
+func (cx *Controller) ListUsers(c *gin.Context) {
 	users, err := cx.Repo.GetAllUsers()
 	if err != nil {
 		c.HTML(500, "500.html", gin.H{})
@@ -28,18 +28,51 @@ func (cx *Controller) ListUsers(c *gin.Context)  {
 	}
 
 	c.HTML(200, "daftar-user.html", gin.H{
-		"url": cx.Config.ServerUrl,
+		"url":   cx.Config.ServerUrl,
 		"items": users,
 	})
 }
 
-func (cx *Controller) PagePassword(c *gin.Context)  {
+func (cx *Controller) PagePassword(c *gin.Context) {
 	c.HTML(200, "ganti-password.html", gin.H{
 		"url": cx.Env(),
 	})
 }
 
-func (cx *Controller) GetAllAdmin(c *gin.Context)  {
+func (cx *Controller) ChangePassword(c *gin.Context) {
+	var req domain.Password
+	if c.ShouldBindJSON(&req) != nil {
+		c.JSON(400, domain.JsonResponse(400, "bad request", domain.Empty{}))
+		return
+	}
+
+	id := c.GetInt("userId")
+	user, err := cx.Repo.GetUserById(id)
+	if err != nil {
+		c.JSON(500, domain.JsonResponse(500, "internal server error", domain.Empty{}))
+		return
+	}
+
+	if user == nil {
+		c.JSON(400, domain.JsonResponse(400, "silahkan login ulang", domain.Empty{}))
+		return
+	}
+
+	if ok := domain.ComparePassword(user.Password, []byte(req.OldPassword)); !ok {
+		c.JSON(400, domain.JsonResponse(400, "password lama tidak sesuai", domain.Empty{}))
+		return
+	}
+
+	newPass := domain.HashAndSalt([]byte(user.Password))
+	if err := cx.Repo.UpdatePassword(id, newPass); err != nil {
+		c.JSON(500, domain.JsonResponse(500, "internal server error", domain.Empty{}))
+		return
+	}
+
+	c.JSON(200, domain.JsonResponse(200, "password berhasil diganti", domain.Empty{}))
+}
+
+func (cx *Controller) GetAllAdmin(c *gin.Context) {
 	res, err := cx.Repo.GetAllAdmin()
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, domain.JsonResponse(http.StatusInternalServerError, err.Error(), domain.Empty{}))
@@ -51,11 +84,11 @@ func (cx *Controller) GetAllAdmin(c *gin.Context)  {
 	if len(res) > 0 {
 		for _, val := range res {
 			admin := domain.AuthResponse{
-				Id: val.AuthId,
-				Username: val.Username,
-				Email: val.Email,
-				Role: domain.RoleH(val.RoleId),
-				IsActive: domain.StatusActive(val.IsActive),
+				Id:        val.AuthId,
+				Username:  val.Username,
+				Email:     val.Email,
+				Role:      domain.RoleH(val.RoleId),
+				IsActive:  domain.StatusActive(val.IsActive),
 				CreatedAt: domain.TimeToString(val.CreatedAt),
 				UpdatedAt: domain.TimeToString(val.UpdatedAt),
 			}
@@ -67,13 +100,12 @@ func (cx *Controller) GetAllAdmin(c *gin.Context)  {
 	c.JSON(200, domain.JsonResponse(200, "Success", admins))
 }
 
-func (cx *Controller) TambahAdmin(c *gin.Context)  {
+func (cx *Controller) TambahAdmin(c *gin.Context) {
 	var req domain.RegisterParam
 	if c.ShouldBindJSON(&req) != nil {
 		c.JSON(400, "bad request")
 		return
 	}
-
 
 	checkUser, err := cx.Repo.GetUser(req.Username)
 	if err != nil || checkUser != nil {
@@ -84,16 +116,16 @@ func (cx *Controller) TambahAdmin(c *gin.Context)  {
 	pass := domain.HashAndSalt([]byte("123456"))
 
 	data := domain.Auth{
-		Username: req.Username,
-		Email: req.Email,
-		Password: pass,
-		RoleId: 2,
-		IsActive: true,
+		Username:  req.Username,
+		Email:     req.Email,
+		Password:  pass,
+		RoleId:    2,
+		IsActive:  true,
 		CreatedAt: domain.TimeNow(),
 		UpdatedAt: domain.TimeNow(),
 	}
 
-	if err := cx.Repo.CreateUser(data);err != nil {
+	if err := cx.Repo.CreateUser(data); err != nil {
 		c.JSON(http.StatusInternalServerError, domain.JsonResponse(500, err.Error(), domain.Empty{}))
 		return
 	}
@@ -101,10 +133,10 @@ func (cx *Controller) TambahAdmin(c *gin.Context)  {
 	c.JSON(201, domain.JsonResponse(201, "Success", domain.Empty{}))
 }
 
-func (cx *Controller) InActiveAdmin(c *gin.Context)  {
+func (cx *Controller) InActiveAdmin(c *gin.Context) {
 	id := domain.StringToInt(c.Param("id"))
-	
-	if err := cx.Repo.InActiveAuth(id, false);err != nil {
+
+	if err := cx.Repo.InActiveAuth(id, false); err != nil {
 		c.JSON(http.StatusInternalServerError, domain.JsonResponse(500, err.Error(), domain.Empty{}))
 		return
 	}
@@ -112,10 +144,10 @@ func (cx *Controller) InActiveAdmin(c *gin.Context)  {
 	c.JSON(200, domain.JsonResponse(200, "Success", domain.Empty{}))
 }
 
-func (cx *Controller) ActivationAdmin(c *gin.Context)  {
+func (cx *Controller) ActivationAdmin(c *gin.Context) {
 	id := domain.StringToInt(c.Param("id"))
-	
-	if err := cx.Repo.InActiveAuth(id, true);err != nil {
+
+	if err := cx.Repo.InActiveAuth(id, true); err != nil {
 		c.JSON(http.StatusInternalServerError, domain.JsonResponse(500, err.Error(), domain.Empty{}))
 		return
 	}
@@ -123,7 +155,7 @@ func (cx *Controller) ActivationAdmin(c *gin.Context)  {
 	c.JSON(200, domain.JsonResponse(200, "Success", domain.Empty{}))
 }
 
-func (cx *Controller) RedirectUrl(c *gin.Context)  {
+func (cx *Controller) RedirectUrl(c *gin.Context) {
 	tipe := c.Param("type")
 	token := c.Query("token")
 
@@ -135,12 +167,12 @@ func (cx *Controller) RedirectUrl(c *gin.Context)  {
 	}
 
 	c.Header("Authorization", "Bearer "+token)
-	redirectUrl := cx.Env()+tipe
+	redirectUrl := cx.Env() + tipe
 	c.Header("Location", redirectUrl)
 	c.AbortWithStatus(307)
 }
 
-func (cx *Controller) AksiDokumen(c *gin.Context)  {
+func (cx *Controller) AksiDokumen(c *gin.Context) {
 	updatedBy := c.GetInt("userId")
 	status := int8(domain.StringToInt(c.PostForm("status")))
 	idPengajuan := domain.StringToInt(c.PostForm("id_pengajuan"))
@@ -157,13 +189,13 @@ func (cx *Controller) AksiDokumen(c *gin.Context)  {
 		return
 	}
 
-	if idPengajuan == 0{
+	if idPengajuan == 0 {
 		c.JSON(400, domain.JsonResponse(400, "id pengajuan tidak sesuai", domain.Empty{}))
 		return
 	}
 
-	req := domain.Aksi {
-		Status: status,
+	req := domain.Aksi{
+		Status:    status,
 		UpdatedAt: domain.TimeNow(),
 		UpdatedBy: updatedBy,
 	}
@@ -175,7 +207,6 @@ func (cx *Controller) AksiDokumen(c *gin.Context)  {
 			c.JSON(400, domain.JsonResponse(400, "file dokumen tidak boleh kosong", domain.Empty{}))
 			return
 		}
-
 
 		if fileDoc.Size > maxFileSize {
 			c.JSON(http.StatusBadRequest, domain.JsonResponse(http.StatusBadRequest, "Ukuran file max 2 MB", domain.Empty{}))
@@ -207,5 +238,5 @@ func (cx *Controller) AksiDokumen(c *gin.Context)  {
 	}
 
 	c.JSON(200, domain.JsonResponse(200, "Data berhasil disimpan", domain.Empty{}))
-	
+
 }
