@@ -26,6 +26,11 @@ func Setup(env *bootrstrap.Env, db bootrstrap.Databases, router *gin.RouterGroup
 		middleware.ValidateToken(env.SecretKey),
 	)
 
+	userRoute := router.Group("").Use(
+		middleware.ValidateJwt(env.SecretKey),
+		middleware.ValidateUser(),
+	)
+
 	adminRoute := router.Group("").Use(
 		middleware.ValidateJwt(env.SecretKey),
 		middleware.ValidateAdmin(),
@@ -50,9 +55,13 @@ func Setup(env *bootrstrap.Env, db bootrstrap.Databases, router *gin.RouterGroup
 	publicRoute.GET("/daftar-admin", cx.PageAdmin)
 	publicRoute.GET("/daftar-user", cx.ListUsers)
 	publicRoute.GET("/ganti-password", cx.PagePassword)
+	publicRoute.GET("/change-password", cx.PagePasswordUser)
 	adminRoute.POST("/change-admin-password", cx.ChangePassword)
+	userRoute.POST("/change-user-password", cx.ChangePassword)
 	publicRoute.GET("/detail-pengajuan/:id", cx.DetailPengajuan)
 	protectedRoute.GET("redirect/:type", cx.RedirectUrl)
+	adminRoute.POST("/add-teams", cx.AddTeams)
+	publicRoute.GET("/teams", cx.GetTeams)
 
 	publicRoute.GET("/pengajuan-surat-domisili", cx.PengajuanDomisili)
 	publicRoute.GET("/pengajuan-surat-kehilangan", cx.PengajuanKehilangan)

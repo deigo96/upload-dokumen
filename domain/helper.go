@@ -80,7 +80,7 @@ func RoleH(role int8) string {
 	case 3:
 		return "user"
 	default:
-		return ""
+		return "user"
 	}
 }
 

@@ -63,3 +63,24 @@ type Password struct {
 	NewPassword string `json:"password"`
 	OldPassword string `json:"old_password"`
 }
+
+type Teams struct {
+	Id uint `json:"id"`
+	Nama string `json:"nama"`
+	Jabatan string `json:"jabatan"`
+	Tentang string `json:"tentang"`
+	Foto string `json:"foto"`
+	Twitter string `json:"twitter"`
+	Facebook string `json:"facebook"`
+	Instagram string `json:"instagram"`
+	Linkedin string `json:"linkedin"`
+	CreatedBy int
+	CreatedAt time.Time
+}
+
+type Dashboard struct {
+	IdPengajuan int `json:"id"`
+	Username string `json:"username"`
+	NamaPengajuan string `json:"nama_pengajuan"`
+	Status int8 `json:"status"`
+}

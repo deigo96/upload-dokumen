@@ -13,4 +13,10 @@ type Repo interface {
 	UpdateStatus(id int, req Aksi) error
 	GetAllUsers() ([]Auth, error)
 	UpdatePassword(id int, pass string) error
+	StoreTeams(req Teams) error
+	GetTeams() ([]Teams, error)
+	CountPengajuan() int
+	CountBelumDiproses() int
+	LastDokumen() ([]Dashboard, error)
+	CountUsers() int
 }

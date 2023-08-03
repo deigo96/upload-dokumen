@@ -2,6 +2,7 @@ package controller
 
 import (
 	"desa-sragen/domain"
+	"fmt"
 	"net/http"
 	"path/filepath"
 
@@ -9,8 +10,17 @@ import (
 )
 
 func (cx *Controller) AdminDashboard(c *gin.Context) {
+	jumlahDokumen := cx.Repo.CountPengajuan()
+	belumDiproses := cx.Repo.CountBelumDiproses()
+	users := cx.Repo.CountUsers()
+	data, _ := cx.Repo.LastDokumen()
+
 	c.HTML(200, "admin-dashboard.html", gin.H{
 		"url": cx.Config.ServerUrl,
+		"items": data,
+		"dokumen": jumlahDokumen,
+		"no_proses": belumDiproses,
+		"users": users,
 	})
 }
 
@@ -39,6 +49,12 @@ func (cx *Controller) PagePassword(c *gin.Context) {
 	})
 }
 
+func (cx *Controller) PagePasswordUser(c *gin.Context) {
+	c.HTML(200, "ganti-password-user.html", gin.H{
+		"url": cx.Env(),
+	})
+}
+
 func (cx *Controller) ChangePassword(c *gin.Context) {
 	var req domain.Password
 	if c.ShouldBindJSON(&req) != nil {
@@ -63,7 +79,7 @@ func (cx *Controller) ChangePassword(c *gin.Context) {
 		return
 	}
 
-	newPass := domain.HashAndSalt([]byte(user.Password))
+	newPass := domain.HashAndSalt([]byte(req.NewPassword))
 	if err := cx.Repo.UpdatePassword(id, newPass); err != nil {
 		c.JSON(500, domain.JsonResponse(500, "internal server error", domain.Empty{}))
 		return
@@ -239,4 +255,69 @@ func (cx *Controller) AksiDokumen(c *gin.Context) {
 
 	c.JSON(200, domain.JsonResponse(200, "Data berhasil disimpan", domain.Empty{}))
 
+}
+
+func (cx *Controller) AddTeams(c *gin.Context)  {
+	var extDoc string
+
+	req := domain.Teams{
+		Nama: c.PostForm("nama"),
+		Jabatan: c.PostForm("jabatan"),
+		Tentang: c.PostForm("tentang"),
+		Twitter: c.PostForm("twitter"),
+		Facebook: c.PostForm("facebook"),
+		Instagram: c.PostForm("instagram"),
+		Linkedin: c.PostForm("linkedin"),
+		CreatedAt: domain.TimeNow(),
+		CreatedBy: c.GetInt("userId"),
+	}
+
+	
+		fileDoc, err := c.FormFile("foto")
+
+		if fileDoc == nil || err != nil {
+			c.JSON(400, domain.JsonResponse(400, "file dokumen tidak boleh kosong", domain.Empty{}))
+			return
+		}
+
+		if fileDoc.Size > maxFileSize {
+			c.JSON(http.StatusBadRequest, domain.JsonResponse(http.StatusBadRequest, "Ukuran file max 2 MB", domain.Empty{}))
+			return
+		}
+
+		if !isAllowedExtension(fileDoc.Filename, []string{".jpd", ".jpeg", ".PNG"}) {
+			c.JSON(http.StatusBadRequest, domain.JsonResponse(http.StatusBadRequest, "Format file harus pdf", domain.Empty{}))
+			return
+		}
+
+		extDoc = domain.GenerateUuid() + filepath.Ext(fileDoc.Filename)
+		destination := filepath.Join("./uploads/teams", extDoc)
+		if err := c.SaveUploadedFile(fileDoc, destination); err != nil {
+			c.JSON(http.StatusInternalServerError, domain.JsonResponse(http.StatusInternalServerError, "Failed to save file", domain.Empty{}))
+			return
+		}
+
+		req.Foto = extDoc
+
+
+		if err := cx.Repo.StoreTeams(req); err != nil {
+			c.JSON(http.StatusInternalServerError, domain.JsonResponse(http.StatusInternalServerError, "internal server error", domain.Empty{}))
+			return
+		}
+
+		c.JSON(201, domain.JsonResponse(201, "success", domain.Empty{}))
+}
+
+func (cx *Controller) GetTeams(c *gin.Context)  {
+	teams, err := cx.Repo.GetTeams()
+	fmt.Println(teams)
+	if err != nil {
+		c.HTML(500, "500.html", gin.H{})
+		return
+	}
+
+	c.HTML(200, "teams.html", gin.H{
+		"url": cx.Env(),
+		"items": teams,
+	})
 }

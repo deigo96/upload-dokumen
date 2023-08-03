@@ -87,7 +87,11 @@
             <li>
               <hr class="dropdown-divider">
             </li>
-
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="ganti-password">
+                <i class="bi bi-gear-wide-connected"></i>
+                <span>Ganti Password</span>
+              </a>
             <li>
               <a class="dropdown-item d-flex align-items-center" href="#" onclick="LogOut('{{.url}}login')">
                 <i class="bi bi-box-arrow-right"></i>
@@ -119,32 +123,47 @@
         <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-journal-text"></i><span>Pengajuan</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
-        <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+        <ul id="forms-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
           <li>
             <a href="surat-domisili">
               <i class="bi bi-circle"></i><span>Surat Domisili</span>
             </a>
           </li>
           <li>
-            <a href="forms-layouts.html">
-              <i class="bi bi-circle"></i><span>Kartu Keluarga</span>
+            <a href="surat-kartu-keluarga">
+              <i class="bi bi-circle"></i><span>Surat Kartu Keluarga</span>
             </a>
           </li>
           <li>
-            <a href="forms-editors.html">
-              <i class="bi bi-circle"></i><span>Form Editors</span>
+            <a href="surat-keterangan-usaha">
+              <i class="bi bi-circle"></i><span>Surat Keterangan Usaha</span>
             </a>
           </li>
           <li>
-            <a href="forms-validation.html">
-              <i class="bi bi-circle"></i><span>Form Validation</span>
+            <a href="surat-kelahiran">
+              <i class="bi bi-circle"></i><span>Surat Kelahiran</span>
+            </a>
+          </li>
+          <li>
+            <a href="surat-kematian">
+              <i class="bi bi-circle"></i><span>Surat Kematian</span>
+            </a>
+          </li>
+          <li>
+            <a href="surat-kehilangan">
+              <i class="bi bi-circle"></i><span>Surat Kehilangan</span>
+            </a>
+          </li>
+          <li>
+            <a href="surat-permohonan-ktp">
+              <i class="bi bi-circle"></i><span>Surat Permohonan KTP</span>
             </a>
           </li>
         </ul>
       </li><!-- End Forms Nav -->
 
       <li class="nav-item" id="daftarAdmin" style="display: none;">
-        <a class="nav-link collapsed" href="daftar-admin">
+        <a class="nav-link active" href="daftar-admin">
           <i class="bi bi-gear"></i>
           <span>Daftar Admin</span>
         </a>
@@ -231,7 +250,7 @@
   <!-- ======= Footer ======= -->
   <footer id="footer" class="footer">
     <div class="copyright">
-      &copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved
+      &copy; Copyright <strong><span>DesaBendo</span></strong>. All Rights Reserved
     </div>
     <div class="credits">
       <!-- <a href="https://bootstrapmade.com/">BootstrapMade</a> -->

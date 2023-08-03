@@ -102,7 +102,7 @@ func (r *repo) UpdateStatus(id int, req domain.Aksi) error {
 }
 
 func (r *repo) GetAllUsers() (record []domain.Auth, err error) {
-	if err := r.db.Table("auth").Where("role_id = 0").Scan(&record).Error; err != nil {
+	if err := r.db.Table("auth").Where("role_id = 3").Scan(&record).Error; err != nil {
 		return nil, errors.New("internal server error")
 	}
 
@@ -115,4 +115,46 @@ func (r *repo) UpdatePassword(id int, pass string) error {
 	}
 
 	return nil
+}
+
+func (r *repo) StoreTeams(req domain.Teams) error {
+	err := r.db.Table("teams").Create(&req)
+
+	return err.Error
+}
+
+func (r *repo) GetTeams() (record []domain.Teams, err error) {
+	if err := r.db.Table("teams").Scan(&record).Error; err != nil {
+		return nil, errors.New("internal server error")
+	}
+
+	return record, nil
+}
+
+func (r *repo) CountPengajuan() int {
+	var count int64
+	r.db.Table("pengajuan_dokumen").Count(&count)
+	return int(count)
+}
+
+func (r *repo) CountBelumDiproses() int {
+	var count int64
+	r.db.Table("pengajuan_dokumen").Where("status = 2").Count(&count)
+	return int(count)
+}
+
+func (r *repo) CountUsers() int {
+	var count int64
+	r.db.Table("auth").Where("role_id = 3").Count(&count)
+	return int(count)
+}
+
+func (r *repo) LastDokumen() (record []domain.Dashboard, err error) {
+	res := r.db.Table("pengajuan_dokumen pd").Joins("join auth a on pd.auth_id = a.auth_id").Joins("join master_pengajuan mp on pd.jenis_pengajuan = mp.id_jenis_pengajuan").Order("pd.created_at DESC").Limit(10).Scan(&record)
+
+	if res.Error != nil {
+		log.Println(res.Error)
+	}
+	
+	return record, nil
 }

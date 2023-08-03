@@ -69,11 +69,22 @@ func ValidateAdmin() gin.HandlerFunc {
 		privilege := ctx.GetInt("role")
 		fmt.Println(privilege)
 		if privilege == 2 || privilege == 1 {
-			fmt.Println("success")
 			ctx.Next()
 			return
 		}
-		fmt.Println("failed")
+
+		ctx.HTML(http.StatusUnauthorized, "login.html", gin.H{})
+		ctx.Abort()
+	}
+}
+
+func ValidateUser() gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		privilege := ctx.GetInt("role")
+		if privilege == 3 {
+			ctx.Next()
+			return
+		}
 
 		ctx.HTML(http.StatusUnauthorized, "login.html", gin.H{})
 		ctx.Abort()

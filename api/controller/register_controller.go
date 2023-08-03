@@ -32,7 +32,7 @@ func (cx *Controller) RegisterHandler(c *gin.Context)  {
 		Username: req.Username,
 		Email: req.Email,
 		Password: domain.HashAndSalt([]byte(req.Password)),
-		RoleId: req.Role,
+		RoleId: 3,
 		IsActive: true,
 		CreatedAt: domain.TimeNow(),
 		UpdatedAt: domain.TimeNow(),
