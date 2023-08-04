@@ -30,6 +30,17 @@
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
 
+  <style>
+    .buttonEmail {
+      background: #47b2e4;
+      border: 0;
+      padding: 12px 34px;
+      color: #fff;
+      transition: 0.4s;
+      border-radius: 50px;
+    }
+  </style>
+
   <!-- =======================================================
   * Template Name: Arsha
   * Updated: Jul 05 2023 with Bootstrap v5.3.0
@@ -511,7 +522,7 @@
           </div>
 
           <div class="col-lg-7 mt-5 mt-lg-0 d-flex align-items-stretch">
-            <form action="mailto:deigosiahaan@gmail.com" method="post" role="form" class="php-email-form" method="post" enctype="text/plain">
+            <div class="php-email-form">
               <div class="row">
                 <div class="form-group col-md-6">
                   <label for="name">Nama</label>
@@ -528,20 +539,20 @@
               </div>
               <div class="form-group">
                 <label for="name">Pesan</label>
-                <textarea class="form-control" name="message" rows="10" required></textarea>
+                <textarea class="form-control" name="message" id="message" rows="10" required></textarea>
               </div>
               <div class="my-3">
                 <div class="loading">Loading</div>
                 <div class="error-message"></div>
-                <div class="sent-message">Your message has been sent. Thank you!</div>
+                <div class="sent-message">Pesan anda berhasil dikirim. Terima kasih!</div>
               </div>
-              <div class="text-center"><button type="submit">Send Message</button></div>
-            </form>
+              <div class="text-center"><button class="buttonEmail" type="button" onclick="sendEmail()">Send
+                  Message</button></div>
+            </div>
+
           </div>
 
         </div>
-
-      </div>
     </section><!-- End Contact Section -->
 
   </main><!-- End #main -->
@@ -568,28 +579,6 @@
             <p>desabendo1703@gmail.com<br>
             </p>
           </div>
-          <div class="col-lg-3 col-md-6 footer-links">
-            <!-- <h4>Useful Links</h4>
-            <ul>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Home</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">About us</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Services</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Terms of service</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Privacy policy</a></li>
-            </ul> -->
-          </div>
-
-          <div class="col-lg-3 col-md-6 footer-links">
-            <!-- <h4>Our Services</h4>
-            <ul>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Web Design</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Web Development</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Product Management</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Marketing</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Graphic Design</a></li>
-            </ul> -->
-          </div>
-
           <div class="col-lg-3 col-md-6 footer-links">
             <h4>Hubungi Kami</h4>
             <p>Jika membutuhkan informasi seputar Desa Bendo kunjungi akun sosial media kami</p>
@@ -654,6 +643,67 @@
       document.getElementById("profileDrowpdown").style.display = "none"
     }
   })
+
+  async function sendEmail() {
+    let name = document.getElementById("name").value
+    let email = document.getElementById("email").value
+    let subject = document.getElementById("subject").value
+    let message = document.getElementById("message").value
+
+    const req = {
+      name: name,
+      email: email,
+      subject: subject,
+      message: message
+    }
+    var errorMessage = document.querySelector(".error-message");
+    var sentMessage = document.querySelector(".sent-message");
+
+    if (name == "") {
+      errorMessage.style.display = "block";
+      errorMessage.textContent = "nama tidak boleh kosong";
+      return
+    }
+
+    if (email == "") {
+      errorMessage.style.display = "block";
+      errorMessage.textContent = "email tidak boleh kosong";
+      return
+    }
+
+    if (subject == "") {
+      errorMessage.style.display = "block";
+      errorMessage.textContent = "subject tidak boleh kosong";
+      return
+    }
+
+    if (message == "") {
+      errorMessage.style.display = "block";
+      errorMessage.textContent = "pesan tidak boleh kosong";
+      return
+    }
+
+    const mail = await fetch(url + "send-email", {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(req)
+    });
+
+    const content = await mail.json()
+    if (content.code == 200) {
+      errorMessage.style.display = "none";
+      sentMessage.style.display = "block"
+      return
+    } else {
+      sentMessage.style.display = "none"
+      errorMessage.style.display = "block";
+      errorMessage.textContent = content.message;
+      return
+    }
+  }
 
   function cariDokumen() {
     let urls = '{{.url}}'
@@ -727,5 +777,6 @@
     //     location.href = "list-document.html"
     //   }
     // })
+
   }
 </script>

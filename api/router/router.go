@@ -89,4 +89,7 @@ func Setup(env *bootrstrap.Env, db bootrstrap.Databases, router *gin.RouterGroup
 	publicRoute.GET("/surat-kematian", cx.SuratKematian)
 	publicRoute.GET("/surat-kehilangan", cx.SuratKehilangan)
 	publicRoute.GET("/surat-permohonan-ktp", cx.SuratKtp)
+
+
+	publicRoute.POST("/send-email", cx.SendEmail)
 }

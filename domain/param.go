@@ -84,3 +84,10 @@ type Dashboard struct {
 	NamaPengajuan string `json:"nama_pengajuan"`
 	Status int8 `json:"status"`
 }
+
+type EmailParam struct {
+	Name string `json:"name"`
+	Email string `json:"email"`
+	Subject string `json:"subject"`
+	Message string `json:"message"`
+}
