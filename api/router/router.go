@@ -41,7 +41,7 @@ func Setup(env *bootrstrap.Env, db bootrstrap.Databases, router *gin.RouterGroup
 		middleware.ValidateSuper(),
 	)
 
-	protectedRoute.GET("validate-token", cx.ValidateToken)
+	userRoute.GET("validate-token", cx.ValidateToken)
 	adminRoute.GET("validate-token-admin", cx.ValidateTokenAdmin)
 	superRoute.GET("validate-token-super", cx.ValidateTokenSuper)
 	publicRoute.GET("/", cx.Dashboard)
