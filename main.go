@@ -15,6 +15,7 @@ func main() {
 	db := app.Db
 	defer app.CloseDBConnection()
 
+	gin.SetMode(gin.ReleaseMode)
 	r := gin.Default()
 	r.LoadHTMLGlob("templates/*.html")
 
